@@ -40,6 +40,9 @@ class OCS(FluentWindow):
         self._connect_signals()
         self._setup_backend_handlers()
         self.init_navigation()
+        
+        # 默认展开导航菜单
+        self.navigationInterface.expand()
 
     def _init_state(self):
         self.hardware_state = HardwareReportState()

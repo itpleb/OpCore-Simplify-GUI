@@ -1,12 +1,12 @@
 {
-    "build_output_directory": "",
+    "build_output_directory": "S:/MacEFI",
     "include_beta_versions": false,
     "theme": "Light",
     "auto_update_check": false,
     "enable_debug_logging": false,
     "window_geometry": {
-        "x": 549,
-        "y": 423,
+        "x": 271,
+        "y": 313,
         "width": 1200,
         "height": 864
     }

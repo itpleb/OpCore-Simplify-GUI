@@ -31,8 +31,8 @@ class SMBIOS:
         elif os_name == "Darwin":
             macserial_binary = ["macserial"]
         else:
-            self.utils.log_message("[SMBIOS] Unknown OS for macserial", level="ERROR")
-            raise Exception("Unknown OS for macserial")
+            self.utils.log_message("[SMBIOS] macserial 操作系统未知", level="ERROR")
+            raise Exception("macserial 操作系统未知")
 
         for binary in macserial_binary:
             macserial_path = os.path.join(self.script_dir, binary)
@@ -40,8 +40,8 @@ class SMBIOS:
                 return macserial_path
 
         if retry_count >= max_retries:
-            self.utils.log_message("[SMBIOS] Failed to find macserial after {} attempts".format(max_retries), level="ERROR")
-            raise Exception("Failed to find macserial after {} attempts".format(max_retries))
+            self.utils.log_message("[SMBIOS] 在 {} 次尝试后仍无法找到 macserial".format(max_retries), level="ERROR")
+            raise Exception("在 {} 次尝试后仍无法找到 macserial".format(max_retries))
         
         download_history = self.utils.read_file(self.g.download_history_file)
 
@@ -210,8 +210,8 @@ class SMBIOS:
                 'is_compatible': is_compatible
             })
             
-        content = "Lines in gray indicate mac models that are not officially supported by {}.".format(macos_name)
+        content = "灰色显示的 Mac 型号表示未被 {} 官方支持。".format(macos_name)
         
-        result = show_smbios_selection_dialog("Customize SMBIOS Model", content, items, selected_smbios_model, default_smbios_model)
+        result = show_smbios_selection_dialog("自定义 SMBIOS 型号", content, items, selected_smbios_model, default_smbios_model)
         
         return result if result else selected_smbios_model

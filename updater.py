@@ -25,12 +25,12 @@ class UpdateCheckerThread(QThread):
         try:
             remote_manifest = self.updater.get_remote_manifest()
             if not remote_manifest:
-                self.check_failed.emit("Could not fetch update information from GitHub.\n\nPlease check your internet connection and try again later.")
+                self.check_failed.emit("无法从 GitHub 获取更新信息。\n\n请检查您的网络连接后重试。")
                 return
             
             local_manifest = self.updater.get_local_manifest()
             if not local_manifest:
-                self.check_failed.emit("Could not generate local manifest.\n\nPlease try again later.")
+                self.check_failed.emit("无法生成本地清单。\n\n请稍后重试。")
                 return
                         
             files_to_update = self.updater.compare_manifests(local_manifest, remote_manifest)
@@ -39,7 +39,7 @@ class UpdateCheckerThread(QThread):
             else:
                 self.update_available.emit(files_to_update)
         except Exception as e:
-            self.check_failed.emit("An error occurred during update check:\n\n{}".format(str(e)))
+            self.check_failed.emit("检查更新时发生错误：\n\n{}".format(str(e)))
 
 class Updater:
     def __init__(self, utils_instance=None, github_instance=None, resource_fetcher_instance=None, run_instance=None, integrity_checker_instance=None):
@@ -55,7 +55,7 @@ class Updater:
 
     def get_remote_manifest(self, dialog=None):
         if dialog:
-            dialog.update_progress(10, "Fetching remote manifest...")
+            dialog.update_progress(10, "正在获取远程清单...")
         
         try:
             temp_manifest_zip_path = os.path.join(self.temporary_dir, "remote_manifest.json.zip")
@@ -70,26 +70,26 @@ class Updater:
             manifest_data = self.utils.read_file(remote_manifest_path)
             
             if dialog:
-                dialog.update_progress(20, "Manifest downloaded successfully")
+                dialog.update_progress(20, "清单下载成功")
             
             return manifest_data
         except Exception as e:
-            self.utils.log_message("[UPDATER] Error fetching remote manifest: {}".format(str(e)), level="ERROR")
+            self.utils.log_message("[UPDATER] 获取远程清单时出错：{}".format(str(e)), level="ERROR")
             return None
     
     def get_local_manifest(self, dialog=None):
         if dialog:
-            dialog.update_progress(40, "Generating local manifest...")
+            dialog.update_progress(40, "正在生成本地清单...")
         
         try:
             manifest_data = self.integrity_checker.generate_folder_manifest(self.root_dir, save_manifest=False)
             
             if dialog:
-                dialog.update_progress(50, "Local manifest generated")
+                dialog.update_progress(50, "本地清单已生成")
             
             return manifest_data
         except Exception as e:
-            self.utils.log_message("[UPDATER] Error generating local manifest: {}".format(str(e)), level="ERROR")
+            self.utils.log_message("[UPDATER] 生成本地清单时出错：{}".format(str(e)), level="ERROR")
             return None
     
     def compare_manifests(self, local_manifest, remote_manifest):
@@ -119,13 +119,13 @@ class Updater:
     
     def download_update(self, dialog=None):
         if dialog:
-            dialog.update_progress(60, "Creating temporary directory...")
+            dialog.update_progress(60, "正在创建临时目录...")
         
         try:
             self.utils.create_folder(self.temporary_dir)
             
             if dialog:
-                dialog.update_progress(65, "Downloading update package...")
+                dialog.update_progress(65, "正在下载更新包...")
             
             file_path = os.path.join(self.temporary_dir, "update.zip")
             success = self.fetcher.download_and_save_file(self.download_repo_url, file_path)
@@ -134,16 +134,16 @@ class Updater:
                 return False
             
             if dialog:
-                dialog.update_progress(75, "Extracting files...")
+                dialog.update_progress(75, "正在解压文件...")
             
             self.utils.extract_zip_file(file_path, self.temporary_dir)
             
             if dialog:
-                dialog.update_progress(80, "Files extracted successfully")
+                dialog.update_progress(80, "文件解压成功")
             
             return True
         except Exception as e:
-            self.utils.log_message("[UPDATER] Error during download/extraction: {}".format(str(e)), level="ERROR")
+            self.utils.log_message("[UPDATER] 下载/解压时出错：{}".format(str(e)), level="ERROR")
             return False
     
     def update_files(self, files_to_update, dialog=None):
@@ -154,31 +154,31 @@ class Updater:
             target_dir = os.path.join(self.temporary_dir, "OpCore-Simplify-main")
 
             if not os.path.exists(target_dir):
-                self.utils.log_message("[UPDATER] Target directory not found: {}".format(target_dir), level="ERROR")
+                self.utils.log_message("[UPDATER] 目标目录不存在：{}".format(target_dir), level="ERROR")
                 return False
             
             all_files = files_to_update["modified"] + files_to_update["missing"]
             total_files = len(all_files)
             
             if dialog:
-                dialog.update_progress(85, "Updating {} files...".format(total_files))
+                dialog.update_progress(85, "正在更新 {} 个文件...".format(total_files))
             
             updated_count = 0
             for index, relative_path in enumerate(all_files, start=1):
                 source = os.path.join(target_dir, relative_path)
                 
                 if not os.path.exists(source):
-                    self.utils.log_message("[UPDATER] Source file not found: {}".format(source), level="ERROR")
+                    self.utils.log_message("[UPDATER] 源文件不存在：{}".format(source), level="ERROR")
                     continue
                 
                 destination = os.path.join(self.root_dir, relative_path)
                 
                 self.utils.create_folder(os.path.dirname(destination))
                 
-                self.utils.log_message("[UPDATER] Updating [{}/{}]: {}".format(index, total_files, os.path.basename(relative_path)), level="INFO")
+                self.utils.log_message("[UPDATER] 正在更新 [{}/{}]：{}".format(index, total_files, os.path.basename(relative_path)), level="INFO")
                 if dialog:
                     progress = 85 + int((index / total_files) * 10)
-                    dialog.update_progress(progress, "Updating [{}/{}]: {}".format(index, total_files, os.path.basename(relative_path)))
+                    dialog.update_progress(progress, "正在更新 [{}/{}]：{}".format(index, total_files, os.path.basename(relative_path)))
                 
                 try:
                     shutil.move(source, destination)
@@ -189,20 +189,20 @@ class Updater:
                             "args": ["chmod", "+x", destination]
                         })
                 except Exception as e:
-                    self.utils.log_message("[UPDATER] Failed to update {}: {}".format(relative_path, str(e)), level="ERROR")
+                    self.utils.log_message("[UPDATER] 更新 {} 失败：{}".format(relative_path, str(e)), level="ERROR")
             
             if dialog:
-                dialog.update_progress(95, "Successfully updated {}/{} files".format(updated_count, total_files))
+                dialog.update_progress(95, "成功更新 {}/{} 个文件".format(updated_count, total_files))
             
             if os.path.exists(self.temporary_dir):
                 shutil.rmtree(self.temporary_dir)
             
             if dialog:
-                dialog.update_progress(100, "Update completed!")
+                dialog.update_progress(100, "更新完成！")
             
             return True
         except Exception as e:
-            self.utils.log_message("[UPDATER] Error during file update: {}".format(str(e)), level="ERROR")
+            self.utils.log_message("[UPDATER] 更新文件时出错：{}".format(str(e)), level="ERROR")
             return False
     
     def run_update(self):    
@@ -212,31 +212,31 @@ class Updater:
             checker_thread.quit()
             checker_thread.wait()
             
-            if not show_confirmation("An update is available!", "Would you like to update now?", yes_text="Update", no_text="Later"):
+            if not show_confirmation("发现新版本！", "是否立即更新？", yes_text="更新", no_text="稍后"):
                 return False
             
-            dialog = show_update_dialog("Updating", "Starting update process...")
+            dialog = show_update_dialog("正在更新", "正在启动更新程序...")
             dialog.show()
             
             try:
                 if not self.download_update(dialog):
                     dialog.close()
-                    show_info("Update Failed", "Could not download or extract update package.\n\nPlease check your internet connection and try again.")
+                    show_info("更新失败", "无法下载或解压更新包。\n\n请检查您的网络连接后重试。")
                     return
                 
                 if not self.update_files(files_to_update, dialog):
                     dialog.close()
-                    show_info("Update Failed", "Could not update files.\n\nPlease try again later.")
+                    show_info("更新失败", "无法更新文件。\n\n请稍后重试。")
                     return
                 
                 dialog.close()
-                show_info("Update Complete", "Update completed successfully!\n\nThe program needs to restart to complete the update process.")
+                show_info("更新完成", "更新已成功完成！\n\n程序需要重启以完成更新过程。")
                 
                 os.execv(sys.executable, ["python3"] + sys.argv)
             except Exception as e:
                 dialog.close()
-                self.utils.log_message("[UPDATER] Error during update: {}".format(str(e)), level="ERROR")
-                show_info("Update Error", "An error occurred during the update process:\n\n{}".format(str(e)))
+                self.utils.log_message("[UPDATER] 更新时出错：{}".format(str(e)), level="ERROR")
+                show_info("更新错误", "更新过程中发生错误：\n\n{}".format(str(e)))
             finally:
                 if os.path.exists(self.temporary_dir):
                     try:
@@ -247,7 +247,7 @@ class Updater:
         def on_check_failed(error_message):
             checker_thread.quit()
             checker_thread.wait()
-            show_info("Update Check Failed", error_message)
+            show_info("检查更新失败", error_message)
         
         def on_no_update():
             checker_thread.quit()

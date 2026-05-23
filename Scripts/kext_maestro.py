@@ -114,10 +114,10 @@ class KextMaestro:
                 default_index = i
 
         while True:
-            content = "For best audio quality, please try multiple layouts to determine which works best with your hardware in post-install."
+            content = "为了获得最佳音频质量，请尝试多个布局以确定哪个最适合您的硬件（在安装后）。"
 
             selected_index = show_options_dialog(
-                title="Choosing Codec Layout ID",
+                title="选择编解码器布局 ID",
                 content=content,
                 options=options,
                 default_index=default_index
@@ -170,14 +170,14 @@ class KextMaestro:
             if codec_properties.get("Device ID") in codec_layouts.data:
                 if self.utils.parse_darwin_version(macos_version) >= self.utils.parse_darwin_version("25.0.0"):
                     content = (
-                        "Since macOS Tahoe 26 DP2, Apple has removed AppleHDA and uses the Apple T2 chip for audio management.<br>"
-                        "Therefore, AppleALC is no longer functional until you rollback AppleHDA."
+                        "从 macOS Tahoe 26 DP2 开始，Apple 已移除 AppleHDA 并使用 Apple T2 芯片进行音频管理。<br>"
+                        "因此，在您回滚 AppleHDA 之前，AppleALC 不再起作用。"
                     )
                     options = [
-                        "<b>AppleALC</b> - Requires rollback AppleHDA with <b>OpenCore Legacy Patcher</b>",
-                        "<b>VoodooHDA</b> - Lower audio quality than use AppleHDA, injection kext into <b>/Library/Extensions</b>"
+                        "<b>AppleALC</b> - 需要使用 <b>OpenCore Legacy Patcher</b> 回滚 AppleHDA",
+                        "<b>VoodooHDA</b> - 比使用 AppleHDA 的音频质量低，将驱动注入 <b>/Library/Extensions</b>"
                     ]
-                    result = show_options_dialog("Audio Kext Selection", content, options, default_index=0)
+                    result = show_options_dialog("音频驱动选择", content, options, default_index=0)
                     if result == 0:
                         needs_oclp = True
                         selected_kexts.append("AppleALC")
@@ -216,38 +216,38 @@ class KextMaestro:
 
                 if gpu_props.get("Codename") in {"Navi 21", "Navi 23"}:
                     content = (
-                        "<span style='color:red font-weight:bold'>Important: Black Screen Fix</span><br>"
-                        "If you experience a black screen after verbose mode:<br>"
-                        "1. Use ProperTree to open config.plist<br>"
-                        "2. Navigate to NVRAM -> Add -> 7C436110-AB2A-4BBB-A880-FE41995C9F82 -> boot-args<br>"
-                        "3. Remove \"-v debug=0x100 keepsyms=1\" from boot-args<br><br>"
+                        "<span style='color:red font-weight:bold'>重要：黑屏修复</span><br>"
+                        "如果您在详细模式后遇到黑屏：<br>"
+                        "1. 使用 ProperTree 打开 config.plist<br>"
+                        "2. 导航到 NVRAM -> Add -> 7C436110-AB2A-4BBB-A880-FE41995C9F82 -> boot-args<br>"
+                        "3. 从 boot-args 中删除 \"-v debug=0x100 keepsyms=1\"<br><br>"
                     ).format(gpu_name, gpu_props.get("Codename"))
 
                     options = [
-                        "<b>NootRX</b> - Uses latest GPU firmware",
-                        "<b>WhateverGreen</b> - Uses original Apple firmware",
+                        "<b>NootRX</b> - 使用最新的 GPU 固件",
+                        "<b>WhateverGreen</b> - 使用原始的 Apple 固件",
                     ]
 
                     if self.utils.parse_darwin_version(macos_version) >= self.utils.parse_darwin_version("25.0.0"):
                         content += (
-                            "Since macOS Tahoe 26, WhateverGreen has known connector patching issues for AMD {} GPUs.<br>"
-                            "To avoid this, you can use NootRX or choose not to install a GPU kext."
+                            "从 macOS Tahoe 26 开始，WhateverGreen 对于 AMD {} GPU 有已知的连接器补丁问题。<br>"
+                            "为了避免这个问题，您可以使用 NootRX 或选择不安装任何 GPU 驱动。"
                         ).format(gpu_props.get("Codename"))
-                        options.append("<b>Don't use any kext</b>")
+                        options.append("<b>不使用任何驱动</b>")
                         recommended_option = 0
                     else:
                         content += (
-                            "AMD {} GPUs have two available kext options:<br>"
-                            "You can try different kexts after installation to find the best one for your system."
+                            "AMD {} GPU 有两个可用的驱动选项：<br>"
+                            "您可以在安装后尝试不同的驱动，以找到最适合您系统的驱动。"
                         ).format(gpu_props.get("Codename"))
                         recommended_option = 1
 
                     if any(other_gpu_props.get("Manufacturer") == "Intel" for other_gpu_props in hardware_report.get("GPU", {}).values()):
-                        show_info("NootRX Kext Warning", "NootRX kext is not compatible with Intel GPUs.<br>Automatically selecting WhateverGreen kext due to Intel GPU compatibility.")
+                        show_info("NootRX 驱动警告", "NootRX 驱动与 Intel GPU 不兼容。<br>由于 Intel GPU 兼容性，已自动选择 WhateverGreen 驱动。")
                         selected_kexts.append("WhateverGreen")
                         continue
 
-                    result = show_options_dialog("AMD GPU Kext Selection", content, options, default_index=recommended_option)
+                    result = show_options_dialog("AMD GPU 驱动选择", content, options, default_index=recommended_option)
                     
                     if result == 0:
                         selected_kexts.append("NootRX")
@@ -258,11 +258,11 @@ class KextMaestro:
 
                 if self.utils.parse_darwin_version(macos_version) >= self.utils.parse_darwin_version("25.0.0"):
                     content = (
-                        "Since macOS Tahoe 26, WhateverGreen has known connector patching issues for AMD GPUs.<br>"
-                        "The current recommendation is to not use WhateverGreen.<br>"
-                        "However, you can still try adding it to see if it works on your system."
+                        "从 macOS Tahoe 26 开始，WhateverGreen 对于 AMD GPU 有已知的连接器补丁问题。<br>"
+                        "目前的建议是不使用 WhateverGreen。<br>"
+                        "不过，您仍然可以尝试添加它，看看它是否在您的系统上工作。"
                     )
-                    show_info("AMD GPU Kext Warning", content)
+                    show_info("AMD GPU 驱动警告", content)
                     break
 
                 selected_kexts.append("WhateverGreen")
@@ -290,31 +290,31 @@ class KextMaestro:
                 selected_kexts.append("AirportBrcmFixup")
             elif device_id in pci_data.IntelWiFiIDs:
                 airport_itlwm_content = (
-                    "<b>AirportItlwm</b> - Uses native WiFi settings menu<br>"
-                    "• Provides Handoff, Universal Clipboard, Location Services, Instant Hotspot support<br>"
-                    "• Supports enterprise-level security<br>"
+                    "<b>AirportItlwm</b> - 使用原生的 WiFi 设置菜单<br>"
+                    "• 提供 Handoff、通用剪贴板、定位服务、即时热点支持<br>"
+                    "• 支持企业级安全<br>"
                 )
 
                 if self.utils.parse_darwin_version(macos_version) >= self.utils.parse_darwin_version("24.0.0"):
-                    airport_itlwm_content += "• <span style='color:red'>Since macOS Sequoia 15</span>: Can work with OCLP root patch but may cause issues"
+                    airport_itlwm_content += "• <span style='color:red'>从 macOS Sequoia 15 开始</span>：可以使用 OCLP 根补丁工作，但可能会导致问题"
                 elif self.utils.parse_darwin_version(macos_version) >= self.utils.parse_darwin_version("23.0.0"):
-                    airport_itlwm_content += "• <span style='color:red'>On macOS Sonoma 14</span>: iServices won't work unless using OCLP root patch"
+                    airport_itlwm_content += "• <span style='color:red'>在 macOS Sonoma 14 上</span>：除非使用 OCLP 根补丁，否则 iServices 将无法工作"
 
                 itlwm_content = (
-                    "<b>itlwm</b> - More stable overall<br>"
-                    "• Works with <b>HeliPort</b> app instead of native WiFi settings menu<br>"
-                    "• No Apple Continuity features and enterprise-level security<br>"
-                    "• Can connect to Hidden Networks"
+                    "<b>itlwm</b> - 整体更稳定<br>"
+                    "• 使用 <b>HeliPort</b> 应用而不是原生的 WiFi 设置菜单<br>"
+                    "• 没有 Apple 连续互通功能和企业级安全<br>"
+                    "• 可以连接到隐藏网络"
                 )
 
                 recommended_option = 1 if self.utils.parse_darwin_version(macos_version) >= self.utils.parse_darwin_version("23.0.0") else 0
                 options = [airport_itlwm_content, itlwm_content]
 
                 if "Beta" in os_data.get_macos_name_by_darwin(macos_version):
-                    show_info("Intel WiFi Kext Selection", "For macOS Beta versions, only itlwm kext is supported.")
+                    show_info("Intel WiFi 驱动选择", "对于 macOS Beta 版本，仅支持 itlwm 驱动。")
                     selected_option = 1
                 else:
-                    result = show_options_dialog("Intel WiFi Kext Selection", "Intel WiFi devices have two available kext options:", options, default_index=recommended_option)
+                    result = show_options_dialog("Intel WiFi 驱动选择", "Intel WiFi 设备有两个可用的驱动选项：", options, default_index=recommended_option)
                     selected_option = result if result is not None else recommended_option
 
                 if selected_option == 1:
@@ -326,10 +326,10 @@ class KextMaestro:
                         selected_kexts.append("IOSkywalkFamily")
                     elif self.utils.parse_darwin_version(macos_version) >= self.utils.parse_darwin_version("23.0.0"):
                         content = (
-                            "Since macOS Sonoma 14, iServices won't work with AirportItlwm without patches.<br><br>"
-                            "Apply OCLP root patch to fix iServices?"
+                            "从 macOS Sonoma 14 开始，不打补丁的话 AirportItlwm 的 iServices 将无法工作。<br><br>"
+                            "是否应用 OCLP 根补丁来修复 iServices？"
                         )
-                        if show_confirmation("OpenCore Legacy Patcher Required", content):
+                        if show_confirmation("需要 OpenCore Legacy Patcher", content):
                             selected_kexts.append("IOSkywalkFamily")
             elif device_id in pci_data.AtherosWiFiIDs[:8]:
                 selected_kexts.append("corecaptureElCap")

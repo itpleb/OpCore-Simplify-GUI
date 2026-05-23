@@ -150,7 +150,7 @@ class CustomMessageDialog(MessageBoxBase):
                 if i > 0:
                     layout.addSpacing(10)
                     
-                header = QLabel("Category: {}".format(category))
+                header = QLabel("类别：{}".format(category))
                 header.setStyleSheet("font-weight: bold; color: #0078D4; padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid #E1DFDD;")
                 layout.addWidget(header)
                 
@@ -169,7 +169,7 @@ class CustomMessageDialog(MessageBoxBase):
         self.viewLayout.addWidget(scroll)
         return checkboxes
 
-    def configure_buttons(self, yes_text: str = "OK", no_text: str = "Cancel", show_cancel: bool = True):
+    def configure_buttons(self, yes_text: str = "下一步", no_text: str = "取消", show_cancel: bool = True):
         self.yesButton.setText(yes_text)
         self.cancelButton.setText(no_text)
         self.cancelButton.setVisible(show_cancel)
@@ -177,11 +177,11 @@ class CustomMessageDialog(MessageBoxBase):
 @ensure_main_thread
 def show_info(title: str, content: str) -> None:
     dialog = CustomMessageDialog(title, content)
-    dialog.configure_buttons(yes_text="OK", show_cancel=False)
+    dialog.configure_buttons(yes_text="确定", show_cancel=False)
     dialog.exec()
 
 @ensure_main_thread
-def show_confirmation(title: str, content: str, yes_text="Yes", no_text="No") -> bool:
+def show_confirmation(title: str, content: str, yes_text="是", no_text="否") -> bool:
     dialog = CustomMessageDialog(title, content)
     dialog.configure_buttons(yes_text=yes_text, no_text=no_text, show_cancel=True)
     return dialog.exec()
@@ -190,7 +190,7 @@ def show_confirmation(title: str, content: str, yes_text="Yes", no_text="No") ->
 def show_options_dialog(title, content, options, default_index=0):
     dialog = CustomMessageDialog(title, content)
     dialog.add_radio_options(options, default_index)
-    dialog.configure_buttons(yes_text="OK", show_cancel=True)
+    dialog.configure_buttons(yes_text="下一步", show_cancel=True)
     
     if dialog.exec():
         return dialog.button_group.checkedId()
@@ -200,7 +200,7 @@ def show_options_dialog(title, content, options, default_index=0):
 def show_checklist_dialog(title, content, items, checked_indices=None):
     dialog = CustomMessageDialog(title, content)
     checkboxes = dialog.add_checklist(items, checked_indices)
-    dialog.configure_buttons(yes_text="OK", show_cancel=True)
+    dialog.configure_buttons(yes_text="完成", show_cancel=True)
     
     if dialog.exec():
         return [i for i, cb in enumerate(checkboxes) if cb.isChecked()]
@@ -269,8 +269,8 @@ def show_smbios_selection_dialog(title, content, items, current_selection, defau
     top_layout = QHBoxLayout(top_container)
     top_layout.setContentsMargins(0, 0, 0, 0)
     
-    show_all_cb = QCheckBox("Show all models")
-    restore_btn = PushButton("Restore default ({})".format(default_selection))
+    show_all_cb = QCheckBox("显示所有型号")
+    restore_btn = PushButton("恢复默认 ({})".format(default_selection))
     
     top_layout.addWidget(show_all_cb)
     top_layout.addStretch()
@@ -296,7 +296,7 @@ def show_smbios_selection_dialog(title, content, items, current_selection, defau
         category_label = None
         if category != current_category:
             current_category = category
-            category_label = QLabel("Category: {}".format(category))
+            category_label = QLabel("类别：{}".format(category))
             category_label.setStyleSheet("font-weight: bold; color: #0078D4; margin-top: 10px; border-bottom: 1px solid #E1DFDD;")
             layout.addWidget(category_label)
             
@@ -358,7 +358,7 @@ def show_smbios_selection_dialog(title, content, items, current_selection, defau
     
     update_visibility()
     
-    dialog.configure_buttons(yes_text="OK", show_cancel=True)
+    dialog.configure_buttons(yes_text="下一步", show_cancel=True)
     
     if dialog.exec():
         selected_id = button_group.checkedId()
@@ -372,9 +372,9 @@ def show_macos_version_dialog(native_macos_version, ocl_patched_macos_version, s
     
     if native_macos_version[1][:2] != suggested_macos_version[:2]:
         suggested_macos_name = os_data.get_macos_name_by_darwin(suggested_macos_version)
-        content += "<b style=\"color: #1565C0\">Suggested macOS version:</b> For better compatibility and stability, we suggest you to use only <b>{}</b> or older.<br><br>".format(suggested_macos_name)
+        content += "<b style=\"color: #1565C0\">建议的 macOS 版本：</b>为了更好的兼容性和稳定性，我们建议您仅使用 <b>{}</b> 或更早版本。<br><br>".format(suggested_macos_name)
 
-    content += "Please select the macOS version you want to use:"
+    content += "请选择您要使用的 macOS 版本："
     
     options = []
     version_values = []
@@ -395,7 +395,7 @@ def show_macos_version_dialog(native_macos_version, ocl_patched_macos_version, s
         
         label = ""
         if oclp_min <= darwin_version <= oclp_max:
-            label = " <i style=\"color: #FF8C00\">(Requires OpenCore Legacy Patcher)</i>"
+            label = " <i style=\"color: #FF8C00\">(需要 OpenCore Legacy Patcher)</i>"
         
         options.append("<span>{}{}</span>".format(name, label))
         version_values.append(darwin_version)
@@ -403,7 +403,7 @@ def show_macos_version_dialog(native_macos_version, ocl_patched_macos_version, s
         if darwin_version == int(suggested_macos_version[:2]):
             default_index = len(options) - 1
     
-    result = show_options_dialog("Select macOS Version", content, options, default_index)
+    result = show_options_dialog("选择 macOS 版本", content, options, default_index)
     
     if result is not None:
         return "{}.99.99".format(version_values[result])
