@@ -42,13 +42,14 @@ class BuildPage(ScrollArea):
         self._connect_signals()
 
     def _init_ui(self):
-        self.expandLayout.setContentsMargins(SPACING["xxlarge"], SPACING["xlarge"], SPACING["xxlarge"], SPACING["xlarge"])
-        self.expandLayout.setSpacing(SPACING["large"])
+        # 紧凑布局
+        self.expandLayout.setContentsMargins(SPACING["large"], SPACING["medium"], SPACING["large"], SPACING["medium"])
+        self.expandLayout.setSpacing(SPACING["medium"])
 
         self.expandLayout.addWidget(self.ui_utils.create_step_indicator(4))
         
         header_layout = QVBoxLayout()
-        header_layout.setSpacing(SPACING["small"])
+        header_layout.setSpacing(SPACING["tiny"])
         title = SubtitleLabel("构建 OpenCore EFI")
         subtitle = BodyLabel("构建您的自定义 OpenCore EFI，准备安装")
         subtitle.setStyleSheet("color: {};".format(COLORS["text_secondary"]))
@@ -243,6 +244,28 @@ class BuildPage(ScrollArea):
     def _start_build_thread(self):
         try:
             backend = self.controller.backend
+            backend.u.log_message("[BUILD] Starting build process...", "INFO", to_build_log=True)
+            
+            # Ensure result_dir is not None
+            if backend.result_dir is None:
+                backend.u.log_message("[BUILD] result_dir is None, using temporary directory", "WARNING", to_build_log=True)
+                backend.result_dir = backend.u.get_temporary_dir()
+            
+            # Verify result directory is accessible
+            try:
+                import os
+                test_path = os.path.join(backend.result_dir, "test.tmp")
+                backend.u.create_folder(backend.result_dir)
+                with open(test_path, 'w') as f:
+                    f.write("test")
+                os.remove(test_path)
+                backend.u.log_message(f"[BUILD] Result directory {backend.result_dir} is accessible", "INFO", to_build_log=True)
+            except Exception as e:
+                backend.u.log_message(f"[BUILD] Error accessing result directory {backend.result_dir}: {str(e)}", "ERROR", to_build_log=True)
+                # Fallback to temporary directory
+                backend.result_dir = backend.u.get_temporary_dir()
+                backend.u.log_message(f"[BUILD] Falling back to temporary directory: {backend.result_dir}", "INFO", to_build_log=True)
+            
             backend.o.gather_bootloader_kexts(backend.k.kexts, self.controller.macos_state.darwin_version)
 
             self._build_opencore_efi(
@@ -260,6 +283,11 @@ class BuildPage(ScrollArea):
             
             self.build_complete_signal.emit(True, bios_requirements)
         except Exception as e:
+            import traceback
+            backend = self.controller.backend
+            error_msg = f"[BUILD] Error during build: {str(e)}\n{traceback.format_exc()}"
+            backend.u.log_message(error_msg, "ERROR", to_build_log=True)
+            print(error_msg)
             self.build_complete_signal.emit(False, None)
 
     def _check_bios_requirements(self, org_hardware_report, hardware_report):
@@ -299,13 +327,24 @@ class BuildPage(ScrollArea):
         current_step += 1
         
         backend = self.controller.backend
+        backend.u.log_message(f"[BUILD] Result directory: {backend.result_dir}", "INFO", to_build_log=True)
+        backend.u.log_message(f"[BUILD] OCK Files directory: {backend.k.ock_files_dir}", "INFO", to_build_log=True)
+        
         backend.u.create_folder(backend.result_dir, remove_content=True)
+        backend.u.log_message(f"[BUILD] Created result directory", "INFO", to_build_log=True)
 
         if not os.path.exists(backend.k.ock_files_dir):
             raise Exception("Directory \"{}\" does not exist.".format(backend.k.ock_files_dir))
         
         source_efi_dir = os.path.join(backend.k.ock_files_dir, "OpenCorePkg")
+        backend.u.log_message(f"[BUILD] Source EFI directory: {source_efi_dir}", "INFO", to_build_log=True)
+        
+        if not os.path.exists(source_efi_dir):
+            raise Exception(f"OpenCorePkg directory not found at {source_efi_dir}. Please re-download files.")
+        
+        backend.u.log_message(f"[BUILD] Starting to copy files...", "INFO", to_build_log=True)
         shutil.copytree(source_efi_dir, backend.result_dir, dirs_exist_ok=True)
+        backend.u.log_message(f"[BUILD] Files copied successfully", "INFO", to_build_log=True)
 
         config_file = os.path.join(backend.result_dir, "EFI", "OC", "config.plist")
         config_data = backend.u.read_file(config_file)

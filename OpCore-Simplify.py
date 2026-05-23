@@ -3,10 +3,10 @@ import sys
 import platform
 import traceback
 
-from PyQt6.QtCore import Qt, pyqtSignal
+from PyQt6.QtCore import Qt, pyqtSignal, QObject
 from PyQt6.QtGui import QFont
-from PyQt6.QtWidgets import QApplication
-from qfluentwidgets import FluentWindow, NavigationItemPosition, FluentIcon, InfoBar, InfoBarPosition
+from PyQt6.QtWidgets import QApplication, QPushButton
+from qfluentwidgets import FluentWindow, NavigationItemPosition, FluentIcon, InfoBar, InfoBarPosition, setTheme, Theme
 
 from Scripts.datasets import os_data
 from Scripts.state import HardwareReportState, macOSVersionState, SMBIOSState, BuildState
@@ -35,14 +35,31 @@ class OCS(FluentWindow):
         self.settings = self.backend.settings
         self.ui_utils = ui_utils.UIUtils()
         
+        # 设置深色主题
+        setTheme(Theme.DARK)
+        
         self._init_state()
         self._setup_window()
         self._connect_signals()
         self._setup_backend_handlers()
         self.init_navigation()
         
-        # 默认展开导航菜单
+        # 默认展开导航菜单，禁用收缩
+        self.navigationInterface.setExpandWidth(300)
         self.navigationInterface.expand()
+        # 禁用收缩功能
+        try:
+            self.navigationInterface.setCollapsible(False)
+        except:
+            pass
+        # 查找并隐藏切换按钮
+        try:
+            for child in self.navigationInterface.findChildren(QObject):
+                if isinstance(child, QPushButton) or 'toggle' in type(child).__name__.lower():
+                    child.hide()
+                    child.setEnabled(False)
+        except:
+            pass
 
     def _init_state(self):
         self.hardware_state = HardwareReportState()

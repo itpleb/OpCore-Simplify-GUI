@@ -57,11 +57,14 @@ class CustomMessageDialog(MessageBoxBase):
             self.contentLabel.setTextFormat(Qt.TextFormat.RichText)
             self.contentLabel.setTextInteractionFlags(Qt.TextInteractionFlag.TextBrowserInteraction)
             self.contentLabel.setOpenExternalLinks(True)
+        else:
+            # 确保普通文本有正确的样式
+            self.contentLabel.setStyleSheet("color: white;")
 
         self.viewLayout.addWidget(self.titleLabel)
         self.viewLayout.addWidget(self.contentLabel)
         
-        self.widget.setMinimumWidth(600)
+        self.widget.setMinimumWidth(700)
         
         self.custom_widget = None
         self.input_field = None
@@ -209,19 +212,19 @@ def show_checklist_dialog(title, content, items, checked_indices=None):
 @ensure_main_thread
 def ask_network_count(total_networks):
     content = (
-        "Found {} WiFi networks on this device.<br><br>"
-        "How many networks would you like to process?<br>"
+        "在此设备上找到了 {} 个 WiFi 网络。<br><br>"
+        "您想处理多少个网络？<br>"
         "<ul>"
-        "<li>Enter a number (1-{})</li>"
-        "<li>Or select \"Process All\"</li>"
+        "<li>输入一个数字 (1-{})</li>"
+        "<li>或选择\"全部处理\"</li>"
         "</ul>"
     ).format(total_networks, total_networks)
     
-    dialog = CustomMessageDialog("WiFi Network Retrieval", content)
-    dialog.input_field = dialog.add_input(placeholder="1-{} (Default: 5)".format(total_networks), default_value="5")
+    dialog = CustomMessageDialog("WiFi 网络获取", content)
+    dialog.input_field = dialog.add_input(placeholder="1-{} (默认: 5)".format(total_networks), default_value="5")
     
     button_layout = QHBoxLayout()
-    all_btn = PushButton("Process All Networks", dialog.widget)
+    all_btn = PushButton("全部处理网络", dialog.widget)
     button_layout.addWidget(all_btn)
     button_layout.addStretch()
     dialog.viewLayout.addLayout(button_layout)

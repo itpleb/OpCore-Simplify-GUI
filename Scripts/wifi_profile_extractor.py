@@ -267,14 +267,14 @@ class WifiProfileExtractor:
     
     def get_profiles(self):
         content = (
-            "<b>Note:</b><br>"
+            "<b>注意：</b><br>"
             "<ul>"
-            "<li>When using itlwm kext, WiFi appears as Ethernet in macOS</li>"
-            "<li>You'll need Heliport app to manage WiFi connections in macOS</li>"
-            "<li>This step will enable auto WiFi connections at boot time<br>"
-            "and is useful for users installing macOS via Recovery OS</li>"
+            "<li>使用 itlwm 驱动时，WiFi 在 macOS 中显示为以太网</li>"
+            "<li>您需要 Heliport 应用来管理 macOS 中的 WiFi 连接</li>"
+            "<li>此步骤将在启动时启用自动 WiFi 连接<br>"
+            "对于通过恢复 OS 安装 macOS 的用户很有用</li>"
             "</ul><br>"
-            "Would you like to scan for WiFi profiles?"
+            "是否要扫描 WiFi 配置文件？"
         )
         if not show_confirmation("WiFi 配置文件提取器", content):
             return []

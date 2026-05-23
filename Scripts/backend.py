@@ -105,9 +105,13 @@ class Backend(QObject):
         )
         
         custom_output_dir = self.settings.get_build_output_directory()
-        if custom_output_dir:
-            self.result_dir = self.u.create_folder(custom_output_dir, remove_content=True)
-        else:
+        try:
+            if custom_output_dir:
+                self.result_dir = self.u.create_folder(custom_output_dir, remove_content=True)
+            else:
+                self.result_dir = self.u.get_temporary_dir()
+        except Exception as e:
+            print(f"Error setting up result directory: {e}")
             self.result_dir = self.u.get_temporary_dir()
 
     def _setup_logging(self):

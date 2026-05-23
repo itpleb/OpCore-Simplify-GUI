@@ -1,6 +1,6 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout
-from qfluentwidgets import SubtitleLabel, BodyLabel, ScrollArea, FluentIcon, GroupHeaderCardWidget, CardWidget, StrongBodyLabel
+from qfluentwidgets import SubtitleLabel, BodyLabel, ScrollArea, FluentIcon, GroupHeaderCardWidget, CardWidget, StrongBodyLabel, PrimaryPushButton
 
 from Scripts.styles import COLORS, SPACING
 from Scripts import ui_utils
@@ -72,15 +72,16 @@ class CompatibilityPage(ScrollArea):
         self._init_ui()
 
     def _init_ui(self):
-        self.expandLayout.setContentsMargins(SPACING["xxlarge"], SPACING["xlarge"], SPACING["xxlarge"], SPACING["xlarge"])
-        self.expandLayout.setSpacing(SPACING["large"])
+        # 紧凑布局：减少边距和间距
+        self.expandLayout.setContentsMargins(SPACING["large"], SPACING["medium"], SPACING["large"], SPACING["medium"])
+        self.expandLayout.setSpacing(SPACING["medium"])
 
         self.expandLayout.addWidget(self.ui_utils.create_step_indicator(2))
 
         header_container = QWidget()
         header_layout = QHBoxLayout(header_container)
         header_layout.setContentsMargins(0, 0, 0, 0)
-        header_layout.setSpacing(SPACING["large"])
+        header_layout.setSpacing(SPACING["medium"])
 
         title_block = QWidget()
         title_layout = QVBoxLayout(title_block)
@@ -100,31 +101,41 @@ class CompatibilityPage(ScrollArea):
         
         self.status_banner = CompatibilityStatusBanner(self.scrollWidget, self.ui_utils, self.expandLayout)
         
-        self.expandLayout.addSpacing(SPACING["large"])
+        self.expandLayout.addSpacing(SPACING["medium"])
 
         self.contentWidget = QWidget()
         self.contentLayout = QVBoxLayout(self.contentWidget)
         self.contentLayout.setContentsMargins(0, 0, 0, 0)
-        self.contentLayout.setSpacing(SPACING["large"])
+        self.contentLayout.setSpacing(SPACING["medium"])  # 紧凑间距
         self.expandLayout.addWidget(self.contentWidget)
 
         self.placeholder_label = BodyLabel("加载硬件报告以查看兼容性信息")
         self.placeholder_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.placeholder_label.setStyleSheet("color: #605E5C; padding: 40px;")
+        self.placeholder_label.setStyleSheet("color: #605E5C; padding: 20px;")
         self.placeholder_label.setWordWrap(True)
         self.contentLayout.addWidget(self.placeholder_label)
+        
+        # 添加下一步按钮区域
+        self._create_next_button()
+        
         self.contentLayout.addStretch()
 
     def update_status_banner(self):
         if not self.controller.hardware_state.hardware_report:
             self.status_banner.setVisible(False)
+            if hasattr(self, 'next_btn'):
+                self.next_btn.setEnabled(False)
             return
 
         if self.controller.hardware_state.compatibility_error:
             self._show_error_banner()
+            if hasattr(self, 'next_btn'):
+                self.next_btn.setEnabled(False)
             return
 
         self._show_support_banner()
+        if hasattr(self, 'next_btn'):
+            self.next_btn.setEnabled(True)
 
     def _show_error_banner(self):
         codes = self.controller.hardware_state.compatibility_error
@@ -237,6 +248,29 @@ class CompatibilityPage(ScrollArea):
         self.scrollWidget.updateGeometry()
         self.scrollWidget.update()
         self.update()
+
+    def _create_next_button(self):
+        # 创建右下角的下一步按钮布局
+        button_layout = QHBoxLayout()
+        button_layout.addStretch()
+        
+        self.next_btn = PrimaryPushButton(FluentIcon.RIGHT_ARROW, "下一步")
+        self.next_btn.clicked.connect(self.go_to_next_page)
+        self.next_btn.setEnabled(False)  # 默认禁用，只有加载了报告才启用
+        self.next_btn.setFixedWidth(150)
+        self.next_btn.setFixedHeight(40)
+        
+        button_layout.addWidget(self.next_btn)
+        self.expandLayout.addLayout(button_layout)
+
+    def go_to_next_page(self):
+        """切换到下一页（配置页面）"""
+        # 使用 FluentWindow 的 switchTo 方法
+        try:
+            self.controller.switchTo(self.controller.configurationPage)
+        except Exception as e:
+            print(f"导航失败: {e}")
+
 
     def _show_placeholder(self):
         self.placeholder_label = BodyLabel("加载硬件报告以查看兼容性信息")

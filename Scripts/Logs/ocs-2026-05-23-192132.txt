@@ -1,0 +1,91 @@
+[2026-05-23 19:21:33] [INFO] [RESOURCE FETCHER] Created SSL context
+[2026-05-23 19:21:40] [INFO] [GATHERING FILES] Gathering Hardware Sniffer...
+[2026-05-23 19:21:40] [INFO] [RESOURCE FETCHER] Fetching and parsing content from https://github.com/lzhoang2801/Hardware-Sniffer/releases
+[2026-05-23 19:21:41] [INFO] [RESOURCE FETCHER] Fetching and parsing content from https://github.com/lzhoang2801/Hardware-Sniffer/releases/expanded_assets/2.0.7
+[2026-05-23 19:21:41] [INFO] [GATHERING FILES] Latest version of Hardware-Sniffer-CLI.exe already downloaded.
+[2026-05-23 19:21:52] [INFO] [EXPORT] 导出位置：N:\MyWork\OpCore-Simplify-GUI2\SysReport\Report.json|||N:\MyWork\OpCore-Simplify-GUI2\SysReport\ACPI
+[2026-05-23 19:21:52] [INFO] [COMPATIBILITY CHECKER] Starting compatibility check...
+[2026-05-23 19:21:52] [INFO] [COMPATIBILITY CHECKER] Compatibility check completed successfully
+[2026-05-23 19:21:52] [INFO] [ACPI GURU] Loading ACPI Table(s) from N:\MyWork\OpCore-Simplify-GUI2\SysReport\ACPI
+[2026-05-23 19:21:52] [INFO] [ACPI GURU] Gathering valid tables from ACPI
+[2026-05-23 19:21:52] [INFO] [ACPI GURU] Found valid table: apic.aml
+[2026-05-23 19:21:52] [INFO] [ACPI GURU] Found valid table: dsdt.aml
+[2026-05-23 19:21:52] [INFO] [ACPI GURU] Found valid table: ssdt1.aml
+[2026-05-23 19:21:52] [INFO] [ACPI GURU] Found valid table: ssdt2.aml
+[2026-05-23 19:21:52] [INFO] [ACPI GURU] Found valid table: ssdt3.aml
+[2026-05-23 19:21:52] [INFO] [ACPI GURU] Found valid table: ssdt4.aml
+[2026-05-23 19:21:52] [INFO] [ACPI GURU] Found valid table: ssdt5.aml
+[2026-05-23 19:21:52] [INFO] [ACPI GURU] Found valid table: ssdt6.aml
+[2026-05-23 19:21:52] [INFO] [ACPI GURU] Found valid table: ssdt7.aml
+[2026-05-23 19:21:52] [INFO] [ACPI GURU] Found valid table: ssdt8.aml
+[2026-05-23 19:21:52] [INFO] [ACPI GURU] Found valid table: ssdt9.aml
+[2026-05-23 19:21:52] [INFO] [ACPI GURU] Found valid table: ssdt10.aml
+[2026-05-23 19:21:52] [INFO] [ACPI GURU] Found valid table: ssdt11.aml
+[2026-05-23 19:21:52] [INFO] [ACPI GURU] Found valid table: ssdt12.aml
+[2026-05-23 19:21:52] [INFO] [ACPI GURU] Found valid table: ssdt13.aml
+[2026-05-23 19:21:52] [INFO] [ACPI GURU] Found valid table: ssdt14.aml
+[2026-05-23 19:21:52] [INFO] [ACPI GURU] Found valid table: ssdt15.aml
+[2026-05-23 19:21:52] [INFO] [ACPI GURU] Found valid table: ssdt16.aml
+[2026-05-23 19:21:52] [INFO] [ACPI GURU] Found valid table: ssdt17.aml
+[2026-05-23 19:21:52] [INFO] [ACPI GURU] Found valid table: ssdt.aml
+[2026-05-23 19:21:52] [INFO] [ACPI GURU] Found at least one valid table
+[2026-05-23 19:21:52] [INFO] [ACPI GURU] Loading valid tables in N:\MyWork\OpCore-Simplify-GUI2\SysReport\ACPI...
+[2026-05-23 19:21:54] [INFO] [ACPI GURU] Done.
+[2026-05-23 19:22:08] [INFO] [HARDWARE CUSTOMIZATION] Starting hardware customization
+[2026-05-23 19:22:08] [INFO] [ACPI GURU] Selecting ACPI patches...
+[2026-05-23 19:22:08] [INFO] [ACPI GURU] Selected patches: FakeEC, PLUG, RTCAWAC, BUS0, USB Reset, USBX
+[2026-05-23 19:22:08] [INFO] [KEXT MAESTRO] Checking for required kernel extensions...
+[2026-05-23 19:23:28] [INFO] [KEXT MAESTRO] Selected kexts: [0, 1, 5, 6, 7, 11, 13, 16, 17, 21, 26, 27, 30, 41, 42, 43, 60, 68, 75, 81]
+[2026-05-23 19:23:35] [INFO] [BUILD] Starting build process...
+[2026-05-23 19:23:35] [ERROR] [BUILD] Error accessing result directory S:/MacEFI: [Errno 13] Permission denied: 'S:/MacEFI\\test.tmp'
+[2026-05-23 19:23:35] [INFO] [BUILD] Falling back to temporary directory: C:\Users\ADMINI~1\AppData\Local\Temp\ocs_oi05eh44
+[2026-05-23 19:23:35] [INFO] [GATHERING FILES] Please wait for download OpenCorePkg, kexts and macserial...
+[2026-05-23 19:23:35] [INFO] [RESOURCE FETCHER] Fetching and parsing content from https://raw.githubusercontent.com/dortania/build-repo/builds/latest.json
+[2026-05-23 19:23:35] [INFO] [RESOURCE FETCHER] Fetching and parsing content from https://github.com/OpenIntelWireless/itlwm/releases
+[2026-05-23 19:23:36] [INFO] [RESOURCE FETCHER] Fetching and parsing content from https://github.com/OpenIntelWireless/itlwm/releases/expanded_assets/v2.3.0
+[2026-05-23 19:23:37] [INFO] [RESOURCE FETCHER] Fetching and parsing content from https://github.com/lshbluesky/IntelBluetoothFirmware/releases
+[2026-05-23 19:23:37] [INFO] [RESOURCE FETCHER] Fetching and parsing content from https://github.com/lshbluesky/IntelBluetoothFirmware/releases/expanded_assets/v2.5.0-d2
+[2026-05-23 19:23:38] [INFO] [RESOURCE FETCHER] Fetching and parsing content from https://github.com/SongXiaoXi/AppleIGC/releases
+[2026-05-23 19:23:39] [INFO] [RESOURCE FETCHER] Fetching and parsing content from https://github.com/SongXiaoXi/AppleIGC/releases/expanded_assets/v1.8
+[2026-05-23 19:23:39] [INFO] [RESOURCE FETCHER] Fetching and parsing content from https://github.com/USBToolBox/kext/releases
+[2026-05-23 19:23:40] [INFO] [RESOURCE FETCHER] Fetching and parsing content from https://github.com/USBToolBox/kext/releases/expanded_assets/1.2.0
+[2026-05-23 19:23:41] [INFO] [RESOURCE FETCHER] Fetching and parsing content from https://github.com/b00t0x/CpuTopologyRebuild/releases
+[2026-05-23 19:23:41] [INFO] [RESOURCE FETCHER] Fetching and parsing content from https://github.com/b00t0x/CpuTopologyRebuild/releases/expanded_assets/2.0.2
+[2026-05-23 19:23:42] [INFO] [GATHERING FILES] Latest version of Lilu already downloaded.
+[2026-05-23 19:23:42] [INFO] [GATHERING FILES] Latest version of VirtualSMC already downloaded.
+[2026-05-23 19:23:42] [INFO] [GATHERING FILES] Latest version of SMCRadeonSensors already downloaded.
+[2026-05-23 19:23:42] [INFO] [GATHERING FILES] Latest version of AppleALC already downloaded.
+[2026-05-23 19:23:42] [INFO] [GATHERING FILES] Latest version of AirportItlwm22 already downloaded.
+[2026-05-23 19:23:42] [INFO] [GATHERING FILES] Latest version of IO80211FamilyLegacy already downloaded.
+[2026-05-23 19:23:42] [INFO] [GATHERING FILES] Latest version of IOSkywalkFamily already downloaded.
+[2026-05-23 19:23:42] [INFO] [GATHERING FILES] Latest version of BrcmPatchRAM already downloaded.
+[2026-05-23 19:23:42] [INFO] [GATHERING FILES] Latest version of IntelBluetoothFirmware already downloaded.
+[2026-05-23 19:23:42] [INFO] [GATHERING FILES] Updating AppleIGC...
+[2026-05-23 19:23:42] [INFO] [GATHERING FILES] Downloading from https://github.com/SongXiaoXi/AppleIGC/releases/download/v1.8/AppleIGC.kext.zip
+[2026-05-23 19:23:42] [INFO] [RESOURCE FETCHER] Downloading and saving file from https://github.com/SongXiaoXi/AppleIGC/releases/download/v1.8/AppleIGC.kext.zip to C:\Users\ADMINI~1\AppData\Local\Temp\ocs_362c1yqu\AppleIGC.zip
+[2026-05-23 19:23:43] [INFO] [RESOURCE FETCHER] Download progress: -- KB/s [██████████████████░░░░░░░░░░░░░░░░░░░░░░]  45% 0.0/0.0MB
+[2026-05-23 19:23:43] [INFO] [RESOURCE FETCHER] Download progress: -- KB/s [████████████████████████████████████░░░░]  91% 0.0/0.0MB
+[2026-05-23 19:23:43] [INFO] [RESOURCE FETCHER] Download progress: -- KB/s [████████████████████████████████████████] 100% 0.0/0.0MB
+[2026-05-23 19:23:43] [INFO] [RESOURCE FETCHER] Verifying SHA256 checksum...
+[2026-05-23 19:23:43] [INFO] [RESOURCE FETCHER] Checksum verified successfully.
+[2026-05-23 19:23:44] [INFO] [GATHERING FILES] Latest version of USBToolBox already downloaded.
+[2026-05-23 19:23:44] [INFO] [GATHERING FILES] Latest version of XHCI-unsupported already downloaded.
+[2026-05-23 19:23:44] [INFO] [GATHERING FILES] Latest version of NVMeFix already downloaded.
+[2026-05-23 19:23:44] [INFO] [GATHERING FILES] Latest version of AMFIPass already downloaded.
+[2026-05-23 19:23:44] [INFO] [GATHERING FILES] Latest version of CpuTopologyRebuild already downloaded.
+[2026-05-23 19:23:44] [INFO] [GATHERING FILES] Latest version of RestrictEvents already downloaded.
+[2026-05-23 19:23:44] [INFO] [GATHERING FILES] Latest version of OpenCorePkg already downloaded.
+[2026-05-23 19:23:45] [INFO] [BUILD] Result directory: C:\Users\ADMINI~1\AppData\Local\Temp\ocs_oi05eh44
+[2026-05-23 19:23:45] [INFO] [BUILD] OCK Files directory: N:\MyWork\OpCore-Simplify-GUI2\OCK_Files
+[2026-05-23 19:23:45] [INFO] [BUILD] 步骤 1/5：复制 EFI 基础文件到结果文件夹...
+[2026-05-23 19:23:45] [INFO] [BUILD] Created result directory
+[2026-05-23 19:23:45] [INFO] [BUILD] Source EFI directory: N:\MyWork\OpCore-Simplify-GUI2\OCK_Files\OpenCorePkg
+[2026-05-23 19:23:45] [INFO] [BUILD] Starting to copy files...
+[2026-05-23 19:23:45] [INFO] [BUILD] Files copied successfully
+[2026-05-23 19:23:45] [INFO] [BUILD] 步骤 2/5：应用 ACPI 补丁...
+[2026-05-23 19:23:47] [INFO] [BUILD] 步骤 3/5：复制驱动并快照到 config.plist...
+[2026-05-23 19:23:48] [INFO] [RESOURCE FETCHER] Fetching and parsing content from https://github.com/b00t0x/CpuTopologyRebuild/raw/refs/heads/master/patches_ht.plist
+[2026-05-23 19:23:48] [INFO] [BUILD] 步骤 4/5：生成 config.plist...
+[2026-05-23 19:23:49] [INFO] [SMBIOS] Generated SMBIOS info: MLB: F5K01..., ROM: 6E429..., SystemProductName: MacPro7,1, SystemSerialNumber: F5KCH..., SystemUUID: 62D2FFC2...
+[2026-05-23 19:23:49] [INFO] [BUILD] 步骤 5/5：清理未使用的驱动、资源和工具...
+[2026-05-23 19:23:58] [INFO] [BUILD] 构建 OpenCore EFI 完成！

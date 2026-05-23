@@ -126,6 +126,23 @@ class SelectHardwareReportPage(QWidget):
         self.create_report_details_group()
 
         self.main_layout.addStretch()
+        
+        # 添加下一步按钮
+        self.create_next_button()
+
+    def create_next_button(self):
+        # 创建右下角的下一步按钮
+        button_layout = QHBoxLayout()
+        button_layout.addStretch()
+        
+        self.next_btn = PrimaryPushButton(FluentIcon.RIGHT_ARROW, "下一步")
+        self.next_btn.clicked.connect(self.go_to_next_page)
+        self.next_btn.setEnabled(False)  # 默认禁用，只有成功加载报告后才启用
+        self.next_btn.setFixedWidth(150)
+        self.next_btn.setFixedHeight(40)
+        
+        button_layout.addWidget(self.next_btn)
+        self.main_layout.addLayout(button_layout)
 
     def create_instructions_card(self):
         card = self.ui_utils.custom_card(
@@ -201,6 +218,14 @@ class SelectHardwareReportPage(QWidget):
     def create_report_details_group(self):
         self.report_group = ReportDetailsGroup(self)
         self.main_layout.addWidget(self.report_group)
+
+    def go_to_next_page(self):
+        """切换到下一页（兼容性页面）"""
+        # 使用 FluentWindow 的 switchTo 方法
+        try:
+            self.controller.switchTo(self.controller.compatibilityPage)
+        except Exception as e:
+            print(f"导航失败: {e}")
 
     def select_report_file(self):
         report_path, _ = QFileDialog.getOpenFileName(
@@ -367,6 +392,8 @@ class SelectHardwareReportPage(QWidget):
             self.controller.update_status("硬件报告加载成功", "success")
             self.suggest_macos_version()
             self.controller.configurationPage.update_display()
+            # 启用下一步按钮
+            self.next_btn.setEnabled(True)
         else:
             if error_type == "validation_error":
                 is_valid, errors, warnings, validated_data = self.controller.backend.v.validate_report(report_path)

@@ -114,6 +114,7 @@ class Utils:
                 os.makedirs(path)
         else:
             os.makedirs(path)
+        return path
 
     def hex_to_bytes(self, string):
         try:

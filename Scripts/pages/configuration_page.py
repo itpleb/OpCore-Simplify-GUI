@@ -1,11 +1,11 @@
 import os
 
-from PyQt6.QtWidgets import QWidget, QVBoxLayout
+from PyQt6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout
 from PyQt6.QtCore import Qt
 from qfluentwidgets import (
     ScrollArea, SubtitleLabel, BodyLabel, FluentIcon, 
     PushSettingCard, ExpandGroupSettingCard, 
-    SettingCard, PushButton
+    SettingCard, PushButton, PrimaryPushButton
 )
 
 from Scripts.custom_dialogs import show_macos_version_dialog
@@ -111,8 +111,9 @@ class ConfigurationPage(ScrollArea):
         self._init_ui()
 
     def _init_ui(self):
-        self.expandLayout.setContentsMargins(SPACING["xxlarge"], SPACING["xlarge"], SPACING["xxlarge"], SPACING["xlarge"])
-        self.expandLayout.setSpacing(SPACING["large"])
+        # 紧凑布局
+        self.expandLayout.setContentsMargins(SPACING["large"], SPACING["medium"], SPACING["large"], SPACING["medium"])
+        self.expandLayout.setSpacing(SPACING["medium"])
 
         self.expandLayout.addWidget(self.ui_utils.create_step_indicator(3))
 
@@ -129,7 +130,7 @@ class ConfigurationPage(ScrollArea):
         header_layout.addWidget(subtitle_label)
 
         self.expandLayout.addWidget(header_container)
-        self.expandLayout.addSpacing(SPACING["large"])
+        self.expandLayout.addSpacing(SPACING["medium"])
 
         self.status_start_index = self.expandLayout.count()
         self._update_status_card()
@@ -165,7 +166,32 @@ class ConfigurationPage(ScrollArea):
         self.smbios_card = SMBIOSModelCard(self.controller, self.customize_smbios_model, self.scrollWidget)
         self.expandLayout.addWidget(self.smbios_card)
 
+        # 创建下一步按钮
+        self._create_next_button()
+        
         self.expandLayout.addStretch()
+
+    def _create_next_button(self):
+        # 创建右下角的下一步按钮布局
+        button_layout = QHBoxLayout()
+        button_layout.addStretch()
+        
+        self.next_btn = PrimaryPushButton(FluentIcon.RIGHT_ARROW, "下一步")
+        self.next_btn.clicked.connect(self.go_to_next_page)
+        self.next_btn.setEnabled(False)  # 默认禁用
+        self.next_btn.setFixedWidth(150)
+        self.next_btn.setFixedHeight(40)
+        
+        button_layout.addWidget(self.next_btn)
+        self.expandLayout.addLayout(button_layout)
+
+    def go_to_next_page(self):
+        """切换到下一页（构建与审查页面）"""
+        # 使用 FluentWindow 的 switchTo 方法
+        try:
+            self.controller.switchTo(self.controller.buildPage)
+        except Exception as e:
+            print(f"导航失败: {e}")
 
     def _update_status_card(self):
         if self.status_card is not None:
@@ -213,6 +239,14 @@ class ConfigurationPage(ScrollArea):
             pass
 
         self.expandLayout.insertWidget(self.status_start_index, self.status_card)
+        
+        # 控制下一步按钮的启用状态
+        if hasattr(self, "next_btn"):
+            # 当配置完成（选择了 macOS 版本）时启用按钮
+            if self.controller.macos_state.darwin_version and self.controller.hardware_state.hardware_report:
+                self.next_btn.setEnabled(True)
+            else:
+                self.next_btn.setEnabled(False)
 
     def select_macos_version(self):
         if not self.controller.validate_prerequisites(require_darwin_version=False, require_customized_hardware=False):

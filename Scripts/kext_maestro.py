@@ -674,20 +674,20 @@ class KextMaestro:
         
         content += (
             "</ul><br>"
-            "<b>Note:</b><br>"
-            "• With Lilu plugins, using the \"-lilubetaall\" boot argument will force them to load.<br>"
-            "• Forcing unsupported kexts can cause system instability. <b><span style='color:red'>Proceed with caution.</span></b><br><br>"
-            "Do you want to force load {} on the unsupported macOS version?"
-        ).format("these kexts" if len(incompatible_kexts) > 1 else "this kext")
+            "<b>注意：</b><br>"
+            "• 使用 Lilu 插件时，使用 \"-lilubetaall\" 启动参数将强制加载它们。<br>"
+            "• 强制加载不支持的驱动可能会导致系统不稳定。<b><span style='color:red'>请谨慎操作。</span></b><br><br>"
+            "是否要在不支持的 macOS 版本上强制加载 {}？"
+        ).format("这些驱动" if len(incompatible_kexts) > 1 else "这个驱动")
         
-        return show_confirmation("Incompatible Kexts", content, yes_text="Yes", no_text="No")
+        return show_confirmation("不兼容的驱动", content, yes_text="是", no_text="否")
 
     def kext_configuration_menu(self, macos_version):
         content = (
-            "Select kernel extensions (kexts) for your system.<br>"
-            "Grayed-out items are not supported by the current macOS version ({}).<br><br>"
-            "<b>Note:</b><br>"
-            "• When a plugin of a kext is selected, the entire kext will be automatically selected."
+            "为您的系统选择内核扩展 (驱动)。<br>"
+            "灰色的项目不被当前的 macOS 版本 ({}) 支持。<br><br>"
+            "<b>注意：</b><br>"
+            "• 当选择了一个驱动的插件时，整个驱动将被自动选择。"
         ).format(macos_version)
         
         checklist_items = []
@@ -697,17 +697,17 @@ class KextMaestro:
             
             display_text = "{} - {}".format(kext.name, kext.description)
             if not is_supported:
-                display_text += " (Unsupported)"
+                display_text += " (不支持)"
             
             checklist_items.append({
                 "label": display_text,
-                "category": kext.category if kext.category else "Uncategorized",
+                "category": kext.category if kext.category else "未分类",
                 "supported": is_supported
             })
         
         checked_indices = [i for i, kext in enumerate(self.kexts) if kext.checked]
         
-        selected_indices = show_checklist_dialog("Configure Kernel Extensions", content, checklist_items, checked_indices)
+        selected_indices = show_checklist_dialog("配置内核扩展", content, checklist_items, checked_indices)
         
         self.utils.log_message("[KEXT MAESTRO] Selected kexts: {}".format(selected_indices), level="INFO")
         if selected_indices is None:

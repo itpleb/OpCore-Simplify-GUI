@@ -3,10 +3,10 @@
     "include_beta_versions": false,
     "theme": "Light",
     "auto_update_check": false,
-    "enable_debug_logging": false,
+    "enable_debug_logging": true,
     "window_geometry": {
-        "x": 271,
-        "y": 313,
+        "x": 660,
+        "y": 354,
         "width": 1200,
         "height": 864
     }
