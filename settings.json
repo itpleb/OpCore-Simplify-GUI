@@ -1,0 +1,13 @@
+{
+    "build_output_directory": "",
+    "include_beta_versions": false,
+    "theme": "Light",
+    "auto_update_check": false,
+    "enable_debug_logging": false,
+    "window_geometry": {
+        "x": 549,
+        "y": 423,
+        "width": 1200,
+        "height": 864
+    }
+}

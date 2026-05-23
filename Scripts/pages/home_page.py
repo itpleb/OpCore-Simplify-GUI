@@ -41,7 +41,7 @@ class HomePage(ScrollArea):
         self.expandLayout.addStretch()
 
     def _create_title_label(self):
-        title_label = SubtitleLabel("Welcome to OpCore Simplify")
+        title_label = SubtitleLabel("欢迎使用 OpCore Simplify")
         title_label.setStyleSheet("font-size: 24px; font-weight: bold;")
         return title_label
 
@@ -55,13 +55,13 @@ class HomePage(ScrollArea):
         hero_text = QVBoxLayout()
         hero_text.setSpacing(SPACING["medium"])
 
-        hero_title = StrongBodyLabel("Introduction")
+        hero_title = StrongBodyLabel("简介")
         hero_title.setStyleSheet("font-size: 18px; color: {};".format(COLORS["primary"]))
         hero_text.addWidget(hero_title)
 
         hero_body = BodyLabel(
-            "A specialized tool that streamlines OpenCore EFI creation by automating the essential setup process and providing standardized configurations.<br>"
-            "Designed to reduce manual effort while ensuring accuracy in your Hackintosh journey."
+            "一款专业的 OpenCore EFI 配置工具，通过自动化关键设置流程和提供标准化配置来简化 Hackintosh 构建。<br>"
+            "旨在减少手动操作，同时确保您的 Hackintosh 之旅准确无误。"
         )
         hero_body.setWordWrap(True)
         hero_body.setStyleSheet("line-height: 1.6; font-size: 14px;")
@@ -77,25 +77,25 @@ class HomePage(ScrollArea):
     def _create_note_card(self):
         return self.ui_utils.custom_card(
             card_type="note",
-            title="OpenCore Legacy Patcher 3.0.0 - Now Supports macOS Tahoe 26!",
+            title="OpenCore Legacy Patcher 3.0.0 - 现已支持 macOS Tahoe 26！",
             body=(
-                "The long awaited version 3.0.0 of OpenCore Legacy Patcher is here, bringing <b>initial support for macOS Tahoe 26</b> to the community!<br><br>"
-                "<b>Please Note:</b><br>"
-                "- Only OpenCore-Patcher 3.0.0 from the <a href=\"https://github.com/lzhoang2801/OpenCore-Legacy-Patcher/releases/tag/3.0.0\" style=\"color: #0078D4; text-decoration: none;\">lzhoang2801/OpenCore-Legacy-Patcher</a> repository provides support for macOS Tahoe 26 with early patches.<br>"
-                "- Official Dortania releases or older patches <b>will NOT work</b> with macOS Tahoe 26."
+                "期待已久的 OpenCore Legacy Patcher 3.0.0 版本终于发布，为社区带来了<b>macOS Tahoe 26 的初步支持</b>！<br><br>"
+                "<b>请注意：</b><br>"
+                "- 只有来自 <a href=\"https://github.com/lzhoang2801/OpenCore-Legacy-Patcher/releases/tag/3.0.0\" style=\"color: #0078D4; text-decoration: none;\">lzhoang2801/OpenCore-Legacy-Patcher</a> 仓库的 OpenCore-Patcher 3.0.0 才提供对 macOS Tahoe 26 的支持。<br>"
+                "- 官方 Dortania 版本或旧版补丁<b>无法</b>在 macOS Tahoe 26 上工作。"
             )
         )
 
     def _create_warning_card(self):
         return self.ui_utils.custom_card(
             card_type="warning",
-            title="WARNING",
+            title="警告",
             body=(
-                "While OpCore Simplify significantly reduces setup time, the Hackintosh journey still requires:<br><br>"
-                "- Understanding basic concepts from the <a href=\"https://dortania.github.io/OpenCore-Install-Guide/\" style=\"color: #F57C00; text-decoration: none;\">Dortania Guide</a><br>"
-                "- Testing and troubleshooting during the installation process.<br>"
-                "- Patience and persistence in resolving any issues that arise.<br><br>"
-                "Our tool does not guarantee a successful installation in the first attempt, but it should help you get started."
+                "虽然 OpCore Simplify 大大减少了设置时间，但 Hackintosh 之旅仍需要：<br><br>"
+                "- 了解 <a href=\"https://dortania.github.io/OpenCore-Install-Guide/\" style=\"color: #F57C00; text-decoration: none;\">Dortania 指南</a>中的基本概念<br>"
+                "- 在安装过程中进行测试和故障排除<br>"
+                "- 耐心和毅力来解决遇到的任何问题<br><br>"
+                "我们的工具不保证一次安装成功，但它可以帮助您入门。"
             )
         )
 
@@ -105,15 +105,15 @@ class HomePage(ScrollArea):
         guide_layout.setContentsMargins(SPACING["large"], SPACING["large"], SPACING["large"], SPACING["large"])
         guide_layout.setSpacing(SPACING["medium"])
 
-        guide_title = StrongBodyLabel("Getting Started")
+        guide_title = StrongBodyLabel("开始使用")
         guide_title.setStyleSheet("font-size: 18px;")
         guide_layout.addWidget(guide_title)
 
         step_items = [
-            (FluentIcon.FOLDER_ADD, "1. Select Hardware Report", "Select hardware report of target system you want to build EFI for."),
-            (FluentIcon.CHECKBOX, "2. Check Compatibility", "Review hardware compatibility with macOS."),
-            (FluentIcon.EDIT, "3. Configure Settings", "Customize ACPI patches, kexts, and config for your OpenCore EFI."),
-            (FluentIcon.DEVELOPER_TOOLS, "4. Build EFI", "Generate your OpenCore EFI."),
+            (FluentIcon.FOLDER_ADD, "1. 选择硬件报告", "选择要为其构建 EFI 的目标系统的硬件报告。"),
+            (FluentIcon.CHECKBOX, "2. 检查兼容性", "查看硬件与 macOS 的兼容性。"),
+            (FluentIcon.EDIT, "3. 配置设置", "自定义 ACPI 补丁、驱动和 OpenCore EFI 配置。"),
+            (FluentIcon.DEVELOPER_TOOLS, "4. 构建 EFI", "生成您的 OpenCore EFI。"),
         ]
 
         for idx, (icon, title, desc) in enumerate(step_items):

@@ -143,31 +143,31 @@ class OCS(FluentWindow):
         self.addSubInterface(
             self.homePage,
             FluentIcon.HOME,
-            "Home",
+            "主页",
             NavigationItemPosition.TOP
         )
         self.addSubInterface(
             self.SelectHardwareReportPage,
             FluentIcon.FOLDER_ADD,
-            "1. Select Hardware Report",
+            "1. 选择硬件报告",
             NavigationItemPosition.TOP
         )
         self.addSubInterface(
             self.compatibilityPage,
             FluentIcon.CHECKBOX,
-            "2. Check Compatibility",
+            "2. 检查兼容性",
             NavigationItemPosition.TOP
         )
         self.addSubInterface(
             self.configurationPage,
             FluentIcon.EDIT,
-            "3. Configure OpenCore EFI",
+            "3. 配置 OpenCore EFI",
             NavigationItemPosition.TOP
         )
         self.addSubInterface(
             self.buildPage,
             FluentIcon.DEVELOPER_TOOLS,
-            "4. Build & Review",
+            "4. 构建与审查",
             NavigationItemPosition.TOP
         )
 
@@ -175,7 +175,7 @@ class OCS(FluentWindow):
         self.addSubInterface(
             self.settingsPage,
             FluentIcon.SETTING,
-            "Settings",
+            "设置",
             NavigationItemPosition.BOTTOM
         )
 
@@ -185,7 +185,7 @@ class OCS(FluentWindow):
     def update_status(self, message, status_type="INFO"):
         if status_type == "success":
             InfoBar.success(
-                title="Success",
+                title="成功",
                 content=message,
                 orient=Qt.Orientation.Horizontal,
                 isClosable=True,
@@ -195,7 +195,7 @@ class OCS(FluentWindow):
             )
         elif status_type == "ERROR":
             InfoBar.error(
-                title="ERROR",
+                title="错误",
                 content=message,
                 orient=Qt.Orientation.Horizontal,
                 isClosable=True,
@@ -205,7 +205,7 @@ class OCS(FluentWindow):
             )
         elif status_type == "WARNING":
             InfoBar.warning(
-                title="WARNING",
+                title="警告",
                 content=message,
                 orient=Qt.Orientation.Horizontal,
                 isClosable=True,
@@ -215,7 +215,7 @@ class OCS(FluentWindow):
             )
         else:
             InfoBar.info(
-                title="INFO",
+                title="信息",
                 content=message,
                 orient=Qt.Orientation.Horizontal,
                 isClosable=True,
@@ -228,31 +228,31 @@ class OCS(FluentWindow):
         if require_hardware_report:
             if not self.hardware_state.hardware_report:
                 if show_status:
-                    self.update_status("Please select hardware report first", "WARNING")
+                    self.update_status("请先选择硬件报告", "WARNING")
                 return False
             
         if require_dsdt:
             if not self.backend.ac._ensure_dsdt():
                 if show_status:
-                    self.update_status("Please load ACPI tables first", "WARNING")
+                    self.update_status("请先加载 ACPI 表", "WARNING")
                 return False
         
         if check_compatibility_error:
             if self.hardware_state.compatibility_error:
                 if show_status:
-                    self.update_status("Incompatible hardware detected, please select different hardware report and try again", "WARNING")
+                    self.update_status("检测到不兼容的硬件，请选择其他硬件报告后重试", "WARNING")
                 return False
         
         if require_darwin_version:
             if not self.macos_state.darwin_version:
                 if show_status:
-                    self.update_status("Please select target macOS version first", "WARNING")
+                    self.update_status("请先选择目标 macOS 版本", "WARNING")
                 return False
 
         if require_customized_hardware:
             if not self.hardware_state.customized_hardware:
                 if show_status:
-                    self.update_status("Please reload hardware report and select target macOS version to continue", "WARNING")
+                    self.update_status("请重新加载硬件报告并选择目标 macOS 版本以继续", "WARNING")
                 return False
         
         return True

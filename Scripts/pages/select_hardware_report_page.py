@@ -19,8 +19,8 @@ class ReportDetailsGroup(ExpandGroupSettingCard):
     def __init__(self, parent=None):
         super().__init__(
             FluentIcon.INFO,
-            "Hardware Report Details",
-            "View selected report paths and validation status",
+            "硬件报告详情",
+            "查看已选报告路径和验证状态",
             parent
         )
         
@@ -37,15 +37,15 @@ class ReportDetailsGroup(ExpandGroupSettingCard):
 
         self.reportCard = self.addGroup(
             FluentIcon.DOCUMENT,
-            "Report Path",
-            "Not selected",
+            "报告路径",
+            "未选择",
             self.reportIcon
         )
         
         self.acpiCard = self.addGroup(
             FluentIcon.FOLDER,
-            "ACPI Directory",
-            "Not selected",
+            "ACPI 目录",
+            "未选择",
             self.acpiIcon
         )
         
@@ -110,8 +110,8 @@ class SelectHardwareReportPage(QWidget):
         
         header_layout = QVBoxLayout()
         header_layout.setSpacing(SPACING["small"])
-        title = SubtitleLabel("Select Hardware Report")
-        subtitle = BodyLabel("Select hardware report of target system you want to build EFI for")
+        title = SubtitleLabel("选择硬件报告")
+        subtitle = BodyLabel("选择要为其构建 EFI 的目标系统的硬件报告")
         subtitle.setStyleSheet("color: {};".format(COLORS["text_secondary"]))
         header_layout.addWidget(title)
         header_layout.addWidget(subtitle)
@@ -130,10 +130,10 @@ class SelectHardwareReportPage(QWidget):
     def create_instructions_card(self):
         card = self.ui_utils.custom_card(
             card_type="note",
-            title="Quick Guide",
+            title="快速指南",
             body=(
-                "<b>Windows Users:</b> Click <span style=\"color:#0078D4; font-weight:600;\">Export Hardware Report</span> button to generate hardware report for current system. Alternatively, you can manually generate hardware report using Hardware Sniffer tool.<br>"
-                "<b>Linux/macOS Users:</b> Please transfer a report generated on Windows. Native generation is not supported."
+                "<b>Windows 用户：</b>点击 <span style=\"color:#0078D4; font-weight:600;\">导出硬件报告</span> 按钮为当前系统生成硬件报告。或者，您可以使用 Hardware Sniffer 工具手动生成硬件报告。<br>"
+                "<b>Linux/macOS 用户：</b>请传输在 Windows 上生成的报告。不支持原生生成。"
             )
         )
         self.main_layout.addWidget(card)
@@ -144,18 +144,18 @@ class SelectHardwareReportPage(QWidget):
         layout.setContentsMargins(SPACING["large"], SPACING["large"], SPACING["large"], SPACING["large"])
         layout.setSpacing(SPACING["medium"])
 
-        title = StrongBodyLabel("Select Methods")
+        title = StrongBodyLabel("选择方式")
         layout.addWidget(title)
 
         btn_layout = QHBoxLayout()
         btn_layout.setSpacing(SPACING["medium"])
 
-        self.select_btn = PrimaryPushButton(FluentIcon.FOLDER_ADD, "Select Hardware Report")
+        self.select_btn = PrimaryPushButton(FluentIcon.FOLDER_ADD, "选择硬件报告")
         self.select_btn.clicked.connect(self.select_hardware_report)
         btn_layout.addWidget(self.select_btn)
 
         if os.name == "nt":
-            self.export_btn = PushButton(FluentIcon.DOWNLOAD, "Export Hardware Report")
+            self.export_btn = PushButton(FluentIcon.DOWNLOAD, "导出硬件报告")
             self.export_btn.clicked.connect(self.export_hardware_report)
             btn_layout.addWidget(self.export_btn)
 
@@ -173,7 +173,7 @@ class SelectHardwareReportPage(QWidget):
         self.status_icon_label.setFixedSize(28, 28)
         status_row.addWidget(self.status_icon_label)
         
-        self.progress_label = StrongBodyLabel("Ready")
+        self.progress_label = StrongBodyLabel("就绪")
         self.progress_label.setStyleSheet("color: {}; font-size: 15px; font-weight: 600;".format(COLORS["text_secondary"]))
         status_row.addWidget(self.progress_label)
         status_row.addStretch()
@@ -204,12 +204,12 @@ class SelectHardwareReportPage(QWidget):
 
     def select_report_file(self):
         report_path, _ = QFileDialog.getOpenFileName(
-            self, "Select Hardware Report", "", "JSON Files (*.json)"
+            self, "选择硬件报告", "", "JSON 文件 (*.json)"
         )
         return report_path if report_path else None
 
     def select_acpi_folder(self):
-        acpi_dir = QFileDialog.getExistingDirectory(self, "Select ACPI Folder", "")
+        acpi_dir = QFileDialog.getExistingDirectory(self, "选择 ACPI 文件夹", "")
         return acpi_dir if acpi_dir else None
     
     def select_hardware_report(self):
@@ -222,7 +222,7 @@ class SelectHardwareReportPage(QWidget):
         
         acpi_dir = None
         if os.path.isdir(potential_acpi):
-            if show_confirmation("ACPI Folder Detected", "Found an ACPI folder at: {}\n\nDo you want to use this ACPI folder?".format(potential_acpi)):
+            if show_confirmation("检测到 ACPI 文件夹", "在以下位置找到 ACPI 文件夹：{}\n\n是否使用此 ACPI 文件夹？".format(potential_acpi)):
                 acpi_dir = potential_acpi
 
         if not acpi_dir:
@@ -286,7 +286,7 @@ class SelectHardwareReportPage(QWidget):
                 self.export_btn.setEnabled(False)
         
         progress_offset = 40 if from_export else 0
-        self.progress_helper.update("loading", "Validating report...", progress_offset)
+        self.progress_helper.update("loading", "验证报告中...", progress_offset)
         self.report_group.setExpand(True)
         
         def load_thread():
@@ -296,26 +296,26 @@ class SelectHardwareReportPage(QWidget):
                 def get_progress(base_progress):
                     return progress_offset + int(base_progress * progress_scale)
                 
-                self.load_report_progress_signal.emit("loading", "Validating report...", get_progress(10))
+                self.load_report_progress_signal.emit("loading", "验证报告中...", get_progress(10))
                 
                 is_valid, errors, warnings, validated_data = self.controller.backend.v.validate_report(report_path)
                 
                 if not is_valid or errors:
-                    error_msg = "Report Errors:\n" + "\n".join(errors)
+                    error_msg = "报告错误：\n" + "\n".join(errors)
                     self.load_report_finished_signal.emit(False, "validation_error", report_path, acpi_dir)
                     return
                 
-                self.load_report_progress_signal.emit("loading", "Validating report...", get_progress(30))
+                self.load_report_progress_signal.emit("loading", "验证报告中...", get_progress(30))
                 
-                self.report_validated_signal.emit(report_path, "Hardware report validated successfully.")
+                self.report_validated_signal.emit(report_path, "硬件报告验证成功。")
                 
-                self.load_report_progress_signal.emit("loading", "Checking compatibility...", get_progress(35))
+                self.load_report_progress_signal.emit("loading", "检查兼容性...", get_progress(35))
                 
                 self.controller.hardware_state.hardware_report = validated_data
                 
                 self.controller.hardware_state.hardware_report, self.controller.macos_state.native_version, self.controller.macos_state.ocl_patched_version, self.controller.hardware_state.compatibility_error = self.controller.backend.c.check_compatibility(validated_data)
                 
-                self.load_report_progress_signal.emit("loading", "Checking compatibility...", get_progress(55))
+                self.load_report_progress_signal.emit("loading", "检查兼容性...", get_progress(55))
 
                 self.compatibility_checked_signal.emit()
 
@@ -326,11 +326,11 @@ class SelectHardwareReportPage(QWidget):
                     self.load_report_finished_signal.emit(False, "compatibility_error", report_path, acpi_dir)
                     return
                 
-                self.load_report_progress_signal.emit("loading", "Loading ACPI tables...", get_progress(60))
+                self.load_report_progress_signal.emit("loading", "加载 ACPI 表...", get_progress(60))
                 
                 self.controller.backend.ac.read_acpi_tables(acpi_dir)
                 
-                self.load_report_progress_signal.emit("loading", "Loading ACPI tables...", get_progress(90))
+                self.load_report_progress_signal.emit("loading", "加载 ACPI 表...", get_progress(90))
                 
                 if not self.controller.backend.ac._ensure_dsdt():
                     self.load_report_finished_signal.emit(False, "acpi_error", report_path, acpi_dir)
@@ -360,34 +360,34 @@ class SelectHardwareReportPage(QWidget):
         
         if success:
             count = len(self.controller.backend.ac.acpi.acpi_tables)
-            self.set_detail_status("acpi", acpi_dir, "success", "ACPI Tables loaded: {} tables found.".format(count))
+            self.set_detail_status("acpi", acpi_dir, "success", "已加载 ACPI 表：找到 {} 个表。".format(count))
             
-            self.progress_helper.update("success", "Hardware report loaded successfully", 100)
+            self.progress_helper.update("success", "硬件报告加载成功", 100)
             
-            self.controller.update_status("Hardware report loaded successfully", "success")
+            self.controller.update_status("硬件报告加载成功", "success")
             self.suggest_macos_version()
             self.controller.configurationPage.update_display()
         else:
             if error_type == "validation_error":
                 is_valid, errors, warnings, validated_data = self.controller.backend.v.validate_report(report_path)
-                msg = "Report Errors:\n" + "\n".join(errors)
+                msg = "报告错误：\n" + "\n".join(errors)
                 self.set_detail_status("report", report_path, "error", msg)
-                self.progress_helper.update("error", "Report validation failed", None)
-                show_info("Report Validation Failed", "The hardware report has errors:\n{}\n\nPlease select a valid report file.".format("\n".join(errors)))
+                self.progress_helper.update("error", "报告验证失败", None)
+                show_info("报告验证失败", "硬件报告存在错误：\n{}\n\n请选择有效的报告文件。".format("\n".join(errors)))
             elif error_type == "compatibility_error":
                 error_msg = self.controller.hardware_state.compatibility_error
                 if isinstance(error_msg, list):
                     error_msg = "\n".join(error_msg)
-                compat_text = "\nCompatibility Error:\n{}".format(error_msg)
+                compat_text = "\n兼容性错误：\n{}".format(error_msg)
                 self.set_detail_status("report", report_path, "error", compat_text)
-                show_info("Incompatible Hardware", "Your hardware is not compatible with macOS:\n\n" + error_msg)
+                show_info("不兼容的硬件", "您的硬件与 macOS 不兼容：\n\n" + error_msg)
             elif error_type == "acpi_error":
-                self.set_detail_status("acpi", acpi_dir, "error", "No ACPI tables found in selected folder.")
-                self.progress_helper.update("error", "No ACPI tables found", None)
-                show_info("No ACPI tables", "No ACPI tables found in ACPI folder.")
+                self.set_detail_status("acpi", acpi_dir, "error", "所选文件夹中未找到 ACPI 表。")
+                self.progress_helper.update("error", "未找到 ACPI 表", None)
+                show_info("未找到 ACPI 表", "ACPI 文件夹中未找到 ACPI 表。")
             else:
-                self.progress_helper.update("error", "Error: {}".format(error_type), None)
-                self.controller.update_status("Failed to load hardware report: {}".format(error_type), "error")
+                self.progress_helper.update("error", "错误：{}".format(error_type), None)
+                self.controller.update_status("加载硬件报告失败：{}".format(error_type), "error")
 
     def export_hardware_report(self):
         self.progress_container.setVisible(True)
@@ -395,7 +395,7 @@ class SelectHardwareReportPage(QWidget):
         if hasattr(self, "export_btn"):
             self.export_btn.setEnabled(False)
         
-        self.progress_helper.update("loading", "Gathering Hardware Sniffer...", 10)
+        self.progress_helper.update("loading", "正在获取 Hardware Sniffer...", 10)
         
         current_dir = os.path.dirname(os.path.realpath(__file__))
         main_dir = os.path.dirname(os.path.dirname(current_dir))
@@ -422,12 +422,12 @@ class SelectHardwareReportPage(QWidget):
             self.select_btn.setEnabled(True)
             if hasattr(self, "export_btn"):
                 self.export_btn.setEnabled(True)
-            self.progress_helper.update("error", "Export failed", 0)
+            self.progress_helper.update("error", "导出失败", 0)
             self.controller.update_status(hardware_sniffer_or_error, "error")
             return
         
         if message == "gathering_complete":
-            self.progress_helper.update("loading", "Exporting hardware report...", 50)
+            self.progress_helper.update("loading", "正在导出硬件报告...", 50)
             
             def run_export_thread():
                 try:
@@ -443,18 +443,18 @@ class SelectHardwareReportPage(QWidget):
                     if success:
                         report_path = os.path.join(report_dir, "Report.json")
                         acpi_dir = os.path.join(report_dir, "ACPI")
-                        error_message = "Export successful"
+                        error_message = "导出成功"
                     else:
                         error_code = output[-1]
-                        if error_code == 3: error_message = "Error collecting hardware."
-                        elif error_code == 4: error_message = "Error generating hardware report."
-                        elif error_code == 5: error_message = "Error dumping ACPI tables."
-                        else: error_message = "Unknown error."
+                        if error_code == 3: error_message = "收集硬件信息时出错。"
+                        elif error_code == 4: error_message = "生成硬件报告时出错。"
+                        elif error_code == 5: error_message = "转储 ACPI 表时出错。"
+                        else: error_message = "未知错误。"
 
                     paths = "{}|||{}".format(report_path, acpi_dir) if report_path and acpi_dir else ""
                     self.export_finished_signal.emit(success, "export_complete", error_message, paths)
                 except Exception as e:
-                    self.export_finished_signal.emit(False, "export_complete", "Exception: {}".format(e), "")
+                    self.export_finished_signal.emit(False, "export_complete", "异常：{}".format(e), "")
             
             thread = threading.Thread(target=run_export_thread, daemon=True)
             thread.start()
@@ -466,7 +466,7 @@ class SelectHardwareReportPage(QWidget):
             if hasattr(self, "export_btn"):
                 self.export_btn.setEnabled(True)
 
-            self.controller.backend.u.log_message("[EXPORT] Export at: {}".format(report_dir), level="INFO")
+            self.controller.backend.u.log_message("[EXPORT] 导出位置：{}".format(report_dir), level="INFO")
             
             if success:
                 if report_dir and "|||" in report_dir:
@@ -478,8 +478,8 @@ class SelectHardwareReportPage(QWidget):
                 if report_path and acpi_dir:
                     self.load_hardware_report(report_path, acpi_dir, from_export=True)
                 else:
-                    self.progress_helper.update("error", "Export completed but paths are invalid", None)
-                    self.controller.update_status("Export completed but paths are invalid", "error")
+                    self.progress_helper.update("error", "导出完成但路径无效", None)
+                    self.controller.update_status("导出完成但路径无效", "error")
             else:
-                self.progress_helper.update("error", "Export failed: {}".format(hardware_sniffer_or_error), None)
-                self.controller.update_status("Export failed: {}".format(hardware_sniffer_or_error), "error")
+                self.progress_helper.update("error", "导出失败：{}".format(hardware_sniffer_or_error), None)
+                self.controller.update_status("导出失败：{}".format(hardware_sniffer_or_error), "error")

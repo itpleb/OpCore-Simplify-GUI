@@ -42,10 +42,10 @@ class SettingsPage(ScrollArea):
         header_layout.setContentsMargins(0, 0, 0, 0)
         header_layout.setSpacing(SPACING["tiny"])
 
-        title_label = SubtitleLabel("Settings")
+        title_label = SubtitleLabel("设置")
         header_layout.addWidget(title_label)
 
-        subtitle_label = BodyLabel("Configure OpCore Simplify preferences")
+        subtitle_label = BodyLabel("配置 OpCore Simplify 首选项")
         subtitle_label.setStyleSheet("color: {};".format(COLORS["text_secondary"]))
         header_layout.addWidget(subtitle_label)
 
@@ -76,7 +76,7 @@ class SettingsPage(ScrollArea):
         bottom_layout.setSpacing(SPACING["medium"])
         bottom_layout.addStretch()
 
-        reset_btn = PushButton("Reset All to Defaults", self.bottom_widget)
+        reset_btn = PushButton("全部重置为默认值", self.bottom_widget)
         reset_btn.setIcon(FluentIcon.CANCEL)
         reset_btn.clicked.connect(self.reset_to_defaults)
         bottom_layout.addWidget(reset_btn)
@@ -102,13 +102,13 @@ class SettingsPage(ScrollArea):
             widget.setContent(value or "Use temporary directory (default)")
 
     def create_build_output_group(self):
-        group = SettingCardGroup("Build Output", self.scrollWidget)
+        group = SettingCardGroup("构建输出", self.scrollWidget)
 
         self.output_dir_card = PushSettingCard(
-            "Browse",
+            "浏览",
             FluentIcon.FOLDER,
-            "Output Directory",
-            self.settings.get("build_output_directory") or "Use temporary directory (default)",
+            "输出目录",
+            self.settings.get("build_output_directory") or "使用临时目录（默认）",
             group
         )
         self.output_dir_card.setObjectName("build_output_directory")
@@ -118,12 +118,12 @@ class SettingsPage(ScrollArea):
         return group
 
     def create_macos_version_group(self):
-        group = SettingCardGroup("macOS Version", self.scrollWidget)
+        group = SettingCardGroup("macOS 版本", self.scrollWidget)
 
         self.include_beta_card = SwitchSettingCard(
             FluentIcon.UPDATE,
-            "Include beta version",
-            "Show major beta macOS versions in version selection menus. Enable to test new macOS releases.",
+            "包含测试版本",
+            "在版本选择菜单中显示主要测试版 macOS 版本。启用以测试新 macOS 版本。",
             configItem=None,
             parent=group
         )
@@ -135,7 +135,7 @@ class SettingsPage(ScrollArea):
         return group
 
     def create_appearance_group(self):
-        group = SettingCardGroup("Appearance", self.scrollWidget)
+        group = SettingCardGroup("外观", self.scrollWidget)
 
         theme_values = [
             "Light",
@@ -164,8 +164,8 @@ class SettingsPage(ScrollArea):
         self.theme_card = ComboBoxSettingCard(
             self.theme_config,
             FluentIcon.BRUSH,
-            "Theme",
-            "Selects the application color theme.",
+            "主题",
+            "选择应用程序颜色主题。",
             theme_values,
             group
         )
@@ -175,12 +175,12 @@ class SettingsPage(ScrollArea):
         return group
 
     def create_update_settings_group(self):
-        group = SettingCardGroup("Updates & Downloads", self.scrollWidget)
+        group = SettingCardGroup("更新与下载", self.scrollWidget)
 
         self.auto_update_card = SwitchSettingCard(
             FluentIcon.UPDATE,
-            "Check for updates on startup",
-            "Automatically checks for new OpCore Simplify updates when the application launches to keep you up to date",
+            "启动时检查更新",
+            "应用程序启动时自动检查 OpCore Simplify 的新更新，让您保持最新",
             configItem=None,
             parent=group
         )
@@ -192,12 +192,12 @@ class SettingsPage(ScrollArea):
         return group
 
     def create_advanced_group(self):
-        group = SettingCardGroup("Advanced Settings", self.scrollWidget)
+        group = SettingCardGroup("高级设置", self.scrollWidget)
 
         self.debug_logging_card = SwitchSettingCard(
             FluentIcon.DEVELOPER_TOOLS,
-            "Enable debug logging",
-            "Enables detailed debug logging throughout the application for advanced troubleshooting and diagnostics",
+            "启用调试日志",
+            "在整个应用程序中启用详细的调试日志，用于高级故障排除和诊断",
             configItem=None,
             parent=group
         )
@@ -209,34 +209,34 @@ class SettingsPage(ScrollArea):
         return group
 
     def create_help_group(self):
-        group = SettingCardGroup("Help & Documentation", self.scrollWidget)
+        group = SettingCardGroup("帮助与文档", self.scrollWidget)
 
         self.opencore_docs_card = HyperlinkCard(
             "https://dortania.github.io/OpenCore-Install-Guide/",
-            "OpenCore Install Guide",
+            "OpenCore 安装指南",
             FluentIcon.BOOK_SHELF,
-            "OpenCore Documentation",
-            "Complete guide for installing macOS with OpenCore",
+            "OpenCore 文档",
+            "使用 OpenCore 安装 macOS 的完整指南",
             group
         )
         group.addSettingCard(self.opencore_docs_card)
 
         self.troubleshoot_card = HyperlinkCard(
             "https://dortania.github.io/OpenCore-Install-Guide/troubleshooting/troubleshooting.html",
-            "Troubleshooting",
+            "故障排除",
             FluentIcon.HELP,
-            "Troubleshooting Guide",
-            "Solutions to common OpenCore installation issues",
+            "故障排除指南",
+            "常见 OpenCore 安装问题的解决方案",
             group
         )
         group.addSettingCard(self.troubleshoot_card)
 
         self.github_card = HyperlinkCard(
             "https://github.com/lzhoang2801/OpCore-Simplify",
-            "View on GitHub",
+            "在 GitHub 上查看",
             FluentIcon.GITHUB,
-            "OpCore-Simplify Repository",
-            "Report issues, contribute, or view the source code",
+            "OpCore-Simplify 仓库",
+            "报告问题、贡献或查看源代码",
             group
         )
         group.addSettingCard(self.github_card)
@@ -246,17 +246,17 @@ class SettingsPage(ScrollArea):
     def browse_output_directory(self):
         folder = QFileDialog.getExistingDirectory(
             self,
-            "Select Build Output Directory",
+            "选择构建输出目录",
             os.path.expanduser("~")
         )
 
         if folder:
             self.settings.set("build_output_directory", folder)
             self.output_dir_card.setContent(folder)
-            self.controller.update_status("Output directory updated successfully", "success")
+            self.controller.update_status("输出目录已成功更新", "success")
 
     def reset_to_defaults(self):
-        result = show_confirmation("Reset Settings", "Are you sure you want to reset all settings to their default values?")
+        result = show_confirmation("重置设置", "确定要将所有设置重置为默认值吗？")
 
         if result:
             self.settings.settings = self.settings.defaults.copy()
@@ -268,4 +268,4 @@ class SettingsPage(ScrollArea):
                     default_value = self.settings.defaults.get(key)
                     self._update_widget_value(widget, default_value)
 
-            self.controller.update_status("All settings reset to defaults", "success")
+            self.controller.update_status("所有设置已重置为默认值", "success")

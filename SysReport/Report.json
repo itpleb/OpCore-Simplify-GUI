@@ -1,0 +1,447 @@
+{
+    "Motherboard": {
+        "Name": "COLORFUL CVN Z690M GAMING FROZEN ",
+        "Chipset": "Z690",
+        "Platform": "Desktop"
+    },
+    "BIOS": {
+        "Version": "5.27",
+        "Release Date": "2022-10-27",
+        "System Type": "x64-based",
+        "Firmware Type": "UEFI",
+        "Secure Boot": "Disabled"
+    },
+    "CPU": {
+        "Manufacturer": "Intel",
+        "Processor Name": "12th Gen Intel(R) Core(TM) i5-12600K",
+        "Codename": "Alder Lake-S",
+        "Core Count": "10",
+        "CPU Count": "01",
+        "SIMD Features": "SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2, AVX, AVX2"
+    },
+    "GPU": {
+        "Radeon RX 580 Series": {
+            "Manufacturer": "AMD",
+            "Codename": "Ellesmere",
+            "Device ID": "1002-67DF",
+            "Device Type": "Discrete GPU",
+            "Subsystem ID": "E3661DA2",
+            "PCI Path": "PciRoot(0x0)/Pci(0x1,0x0)/Pci(0x0,0x0)",
+            "ACPI Path": "\\_SB.USBX.PEG1.PEGP",
+            "Resizable BAR": "Disabled"
+        }
+    },
+    "Monitor": {
+        "LG HDR 4K": {
+            "Connector Type": "DP",
+            "Resolution": "3840x2160",
+            "Connected GPU": "Radeon RX 580 Series"
+        }
+    },
+    "Network": {
+        "Intel(R) Ethernet Controller I225-LM": {
+            "Bus Type": "PCI",
+            "Device ID": "8086-15F3",
+            "Subsystem ID": "00008086",
+            "PCI Path": "PciRoot(0x0)/Pci(0x1c,0x0)/Pci(0x0,0x0)",
+            "ACPI Path": "\\_SB.USBX.RP01.PXSX"
+        },
+        "Intel(R) Wi-Fi 6 AX201 160MHz": {
+            "Bus Type": "PCI",
+            "Device ID": "8086-7AF0",
+            "Subsystem ID": "00748086",
+            "PCI Path": "PciRoot(0x0)/Pci(0x14,0x3)",
+            "ACPI Path": "\\_SB.USBX.CNVW"
+        }
+    },
+    "Sound": {
+        "High Definition Audio \u8bbe\u5907": {
+            "Bus Type": "HDAUDIO",
+            "Device ID": "1002-AA01",
+            "Subsystem ID": "00AA0100",
+            "Controller Device ID": "1002-AAF0"
+        },
+        "Realtek High Definition Audio": {
+            "Bus Type": "HDAUDIO",
+            "Device ID": "10EC-0897",
+            "Subsystem ID": "10EC0000",
+            "Controller Device ID": "8086-7AD0"
+        }
+    },
+    "USB Controllers": {
+        "Intel(R) USB 3.20 \u53ef\u6269\u5c55\u4e3b\u673a\u63a7\u5236\u5668 - 1.20 (Microsoft)": {
+            "Bus Type": "PCI",
+            "Device ID": "8086-7AE0",
+            "Subsystem ID": "72708086",
+            "PCI Path": "PciRoot(0x0)/Pci(0x14,0x0)",
+            "ACPI Path": "\\_SB.USBX.XHCI"
+        }
+    },
+    "Input": {
+        "Nano Receiver": {
+            "Bus Type": "USB",
+            "Device ID": "046D-C534"
+        },
+        "USB \u8f93\u5165\u8bbe\u5907": {
+            "Bus Type": "USB",
+            "Device ID": "2F4C-1000"
+        },
+        "USB \u8f93\u5165\u8bbe\u5907_#1": {
+            "Bus Type": "USB",
+            "Device ID": "3554-FC00"
+        }
+    },
+    "Storage Controllers": {
+        "Alder Lake-S PCH SATA Controller [AHCI Mode]": {
+            "Bus Type": "PCI",
+            "Device ID": "8086-7AE2",
+            "Subsystem ID": "72708086",
+            "PCI Path": "PciRoot(0x0)/Pci(0x17,0x0)",
+            "ACPI Path": "\\_SB.USBX.SAT0",
+            "Disk Drives": [
+                "KINGSTON SA400S37240G",
+                "ST3000DM008-2DM166"
+            ]
+        },
+        "NVMe SSD Controller MAP1202 (DRAM-less)": {
+            "Bus Type": "PCI",
+            "Device ID": "1E4B-1202",
+            "Subsystem ID": "12021E4B",
+            "PCI Path": "PciRoot(0x0)/Pci(0x1a,0x0)/Pci(0x0,0x0)",
+            "ACPI Path": "\\_SB.USBX.RP25.PXSX",
+            "Disk Drives": [
+                "J.ZAO QL SERIES 1TB SSD"
+            ]
+        },
+        "PCIe 3 NVMe SSD (DRAM-less)": {
+            "Bus Type": "PCI",
+            "Device ID": "1F40-1202",
+            "Subsystem ID": "12021F40",
+            "PCI Path": "PciRoot(0x0)/Pci(0x1c,0x4)/Pci(0x0,0x0)",
+            "ACPI Path": "\\_SB.USBX.RP05.PXSX",
+            "Disk Drives": [
+                "Netac NVMe SSD 1TB"
+            ]
+        },
+        "P5 Plus NVMe PCIe SSD": {
+            "Bus Type": "PCI",
+            "Device ID": "C0A9-5407",
+            "Subsystem ID": "0100C0A9",
+            "PCI Path": "PciRoot(0x0)/Pci(0x6,0x0)/Pci(0x0,0x0)",
+            "ACPI Path": "\\_SB.USBX.PEG0.PEGP",
+            "Disk Drives": [
+                "CT500P5PSSD8"
+            ]
+        }
+    },
+    "Bluetooth": {
+        "\u82f1\u7279\u5c14(R) \u65e0\u7ebf Bluetooth(R)": {
+            "Bus Type": "USB",
+            "Device ID": "8087-0026"
+        }
+    },
+    "System Devices": {
+        "\u6bcd\u677f\u8d44\u6e90": {
+            "Bus Type": "ACPI",
+            "Device": "PNP0C02",
+            "ACPI Path": "\\_SB.USBX.LPCB.SIO1"
+        },
+        "\u6bcd\u677f\u8d44\u6e90_#1": {
+            "Bus Type": "ACPI",
+            "Device": "PNP0C02",
+            "ACPI Path": "\\_SB.USBX.PDRC"
+        },
+        "\u6bcd\u677f\u8d44\u6e90_#2": {
+            "Bus Type": "ACPI",
+            "Device": "PNP0C02",
+            "ACPI Path": "\\_SB.USBX.LPCB.LDRC"
+        },
+        "\u6bcd\u677f\u8d44\u6e90_#3": {
+            "Bus Type": "ACPI",
+            "Device": "PNP0C02",
+            "ACPI Path": "\\_SB.URSC"
+        },
+        "Intel(R) PEG60 - 464D": {
+            "Bus Type": "PCI",
+            "Device ID": "8086-464D",
+            "Subsystem ID": "72708086",
+            "PCI Path": "PciRoot(0x0)/Pci(0x6,0x0)",
+            "ACPI Path": "\\_SB.USBX.PEG0"
+        },
+        "\u7cfb\u7edf\u8ba1\u65f6\u5668": {
+            "Bus Type": "ACPI",
+            "Device": "PNP0100",
+            "ACPI Path": "\\_SB.USBX.LPCB.TIMR"
+        },
+        "ACPI \u98ce\u6247": {
+            "Bus Type": "ACPI",
+            "Device": "PNP0C0B",
+            "ACPI Path": "\\_SB.FAN0"
+        },
+        "ACPI \u98ce\u6247_#1": {
+            "Bus Type": "ACPI",
+            "Device": "PNP0C0B",
+            "ACPI Path": "\\_SB.FAN1"
+        },
+        "ACPI \u98ce\u6247_#2": {
+            "Bus Type": "ACPI",
+            "Device": "PNP0C0B",
+            "ACPI Path": "\\_SB.FAN2"
+        },
+        "ACPI \u98ce\u6247_#3": {
+            "Bus Type": "ACPI",
+            "Device": "PNP0C0B",
+            "ACPI Path": "\\_SB.FAN3"
+        },
+        "ACPI \u98ce\u6247_#4": {
+            "Bus Type": "ACPI",
+            "Device": "PNP0C0B",
+            "ACPI Path": "\\_SB.FAN4"
+        },
+        "\u5377\u7ba1\u7406\u5668": {
+            "Bus Type": "ROOT",
+            "Device": "VOLMGR"
+        },
+        "Microsoft Hyper-V \u865a\u62df\u673a\u603b\u7ebf\u63d0\u4f9b\u7a0b\u5e8f": {
+            "Bus Type": "ROOT",
+            "Device": "VMBUS"
+        },
+        "Microsoft \u57fa\u672c\u663e\u793a\u9a71\u52a8\u7a0b\u5e8f": {
+            "Bus Type": "ROOT",
+            "Device": "BASICDISPLAY"
+        },
+        "ACPI \u7761\u7720\u6309\u94ae": {
+            "Bus Type": "ACPI",
+            "Device": "PNP0C0E",
+            "ACPI Path": "\\_SB.SLPB"
+        },
+        "AMD Link Controller Emulation": {
+            "Bus Type": "ROOT",
+            "Device": "AMDXE"
+        },
+        "Microsoft \u865a\u62df\u673a\u76d1\u63a7\u7a0b\u5e8f\u670d\u52a1": {
+            "Bus Type": "ROOT",
+            "Device": "HVSERVICE"
+        },
+        "ACPI \u70ed\u533a\u57df": {
+            "Bus Type": "ACPI",
+            "Device": "THERMALZONE",
+            "ACPI Path": "\\_SB.TZ00"
+        },
+        "Microsoft Windows Management Interface for ACPI": {
+            "Bus Type": "ACPI",
+            "Device": "PNP0C14",
+            "ACPI Path": "\\_SB.WFDE"
+        },
+        "Intel(R) LPC Controller/eSPI Controller (Z690) - 7A84": {
+            "Bus Type": "PCI",
+            "Device ID": "8086-7A84",
+            "Subsystem ID": "72708086",
+            "PCI Path": "PciRoot(0x0)/Pci(0x1f,0x0)",
+            "ACPI Path": "\\_SB.USBX.LPCB"
+        },
+        "Microsoft Hyper-V \u865a\u62df\u5316\u57fa\u7840\u7ed3\u6784\u9a71\u52a8\u7a0b\u5e8f": {
+            "Bus Type": "ROOT",
+            "Device": "VID"
+        },
+        "\u9ad8\u7cbe\u5ea6\u4e8b\u4ef6\u8ba1\u65f6\u5668": {
+            "Bus Type": "ACPI",
+            "Device": "PNP0103",
+            "ACPI Path": "\\_SB.USBX.LPCB.HPET"
+        },
+        "\u6bcd\u677f\u8d44\u6e90_#4": {
+            "Bus Type": "ACPI",
+            "Device": "PNP0C02",
+            "ACPI Path": "\\_SB.ICLK"
+        },
+        "\u590d\u5408\u603b\u7ebf\u679a\u4e3e\u5668": {
+            "Bus Type": "ROOT",
+            "Device": "COMPOSITEBUS"
+        },
+        "Microsoft \u865a\u62df\u9a71\u52a8\u5668\u679a\u4e3e\u5668": {
+            "Bus Type": "ROOT",
+            "Device": "VDRVROOT"
+        },
+        "Lenovo thinkplus X15pro Hands-Free AG": {
+            "Bus Type": "BTHENUM"
+        },
+        "\u6bcd\u677f\u8d44\u6e90_#5": {
+            "Bus Type": "ACPI",
+            "Device": "INTC1099",
+            "ACPI Path": "\\_SB.USBX.LPCB.CWDT"
+        },
+        "Intel(R) PCI Express Root Port #25 - 7AC8": {
+            "Bus Type": "PCI",
+            "Device ID": "8086-7AC8",
+            "Subsystem ID": "72708086",
+            "PCI Path": "PciRoot(0x0)/Pci(0x1a,0x0)",
+            "ACPI Path": "\\_SB.USBX.RP25"
+        },
+        "Intel(R) SMBus - 7AA3": {
+            "Bus Type": "PCI",
+            "Device ID": "8086-7AA3",
+            "Subsystem ID": "72708086",
+            "PCI Path": "PciRoot(0x0)/Pci(0x1f,0x4)",
+            "ACPI Path": "\\_SB.USBX.SBUS"
+        },
+        "Intel(R) PEG10 - 460D": {
+            "Bus Type": "PCI",
+            "Device ID": "8086-460D",
+            "Subsystem ID": "72708086",
+            "PCI Path": "PciRoot(0x0)/Pci(0x1,0x0)",
+            "ACPI Path": "\\_SB.USBX.PEG1"
+        },
+        "UMBus Root Bus Enumerator": {
+            "Bus Type": "ROOT",
+            "Device": "UMBUS"
+        },
+        "Intel(R) Host Bridge/DRAM Registers - 4648": {
+            "Bus Type": "PCI",
+            "Device ID": "8086-4648",
+            "Subsystem ID": "72708086",
+            "PCI Path": "PciRoot(0x0)/Pci(0x0,0x0)",
+            "ACPI Path": "\\_SB.USBX.MC__"
+        },
+        "Intel(R) LPSS: UART #0 - 7AA8": {
+            "Bus Type": "PCI",
+            "Device ID": "8086-7AA8",
+            "Subsystem ID": "72708086",
+            "PCI Path": "PciRoot(0x0)/Pci(0x1e,0x0)",
+            "ACPI Path": "\\_SB.USBX.UA00"
+        },
+        "High Definition Audio Bus": {
+            "Bus Type": "PCI",
+            "Device ID": "1002-AAF0",
+            "Subsystem ID": "AAF01DA2",
+            "PCI Path": "PciRoot(0x0)/Pci(0x1,0x0)/Pci(0x0,0x1)"
+        },
+        "\u53ef\u7f16\u7a0b\u4e2d\u65ad\u63a7\u5236\u5668": {
+            "Bus Type": "ACPI",
+            "Device": "PNP0000",
+            "ACPI Path": "\\_SB.USBX.LPCB.IPIC"
+        },
+        "Microsoft Windows Management Interface for ACPI_#1": {
+            "Bus Type": "ACPI",
+            "Device": "PNP0C14",
+            "ACPI Path": "\\_SB.WFTE"
+        },
+        "Pci Bus": {
+            "Bus Type": "ACPI",
+            "Device": "PNP0A08",
+            "ACPI Path": "\\_SB.USBX"
+        },
+        "Microsoft Hyper-V PCI \u670d\u52a1\u5668": {
+            "Bus Type": "ROOT",
+            "Device": "VPCIVSP"
+        },
+        "ACPI \u7535\u6e90\u6309\u94ae": {
+            "Bus Type": "ACPI",
+            "Device": "PNP0C0C",
+            "ACPI Path": "\\_SB.PWRB"
+        },
+        "Microsoft ACPI-Compliant System": {
+            "Bus Type": "ACPI_HAL",
+            "Device": "PNP0C08"
+        },
+        "Microsoft \u57fa\u672c\u5448\u73b0\u9a71\u52a8\u7a0b\u5e8f": {
+            "Bus Type": "ROOT",
+            "Device": "BASICRENDER"
+        },
+        "ACPI \u56fa\u5b9a\u529f\u80fd\u6309\u94ae": {
+            "Bus Type": "ACPI",
+            "Device": "FIXEDBUTTON"
+        },
+        "ACPI \u5524\u9192\u8b66\u62a5": {
+            "Bus Type": "ACPI",
+            "Device": "ACPI000E",
+            "ACPI Path": "\\_SB.AWAC"
+        },
+        "High Definition Audio \u63a7\u5236\u5668": {
+            "Bus Type": "PCI",
+            "Device ID": "8086-7AD0",
+            "Subsystem ID": "72708086",
+            "PCI Path": "PciRoot(0x0)/Pci(0x1f,0x3)",
+            "ACPI Path": "\\_SB.USBX.HDAS"
+        },
+        "Intel(R) Power Engine Plug-in": {
+            "Bus Type": "ACPI",
+            "Device": "INT33A1",
+            "ACPI Path": "\\_SB.PEPD"
+        },
+        "Microsoft Hyper-V \u865a\u62df\u78c1\u76d8\u670d\u52a1\u5668": {
+            "Bus Type": "ROOT",
+            "Device": "STORVSP"
+        },
+        "\u6bcd\u677f\u8d44\u6e90_#6": {
+            "Bus Type": "ACPI",
+            "Device": "PNP0C02",
+            "ACPI Path": "\\_SB.IOTR"
+        },
+        "Intel(R) LPSS: SPI #1 - 7AAB": {
+            "Bus Type": "PCI",
+            "Device ID": "8086-7AAB",
+            "Subsystem ID": "72708086",
+            "PCI Path": "PciRoot(0x0)/Pci(0x1e,0x3)",
+            "ACPI Path": "\\_SB.USBX.SPI1"
+        },
+        "OrayUSBVHCI": {
+            "Bus Type": "ROOT",
+            "Device": "ORAYUSBVHCI"
+        },
+        "AMD Crash Defender": {
+            "Bus Type": "ROOT",
+            "Device": "AMDLOG"
+        },
+        "NDIS \u865a\u62df\u7f51\u7edc\u9002\u914d\u5668\u679a\u4e3e\u5668": {
+            "Bus Type": "ROOT",
+            "Device": "NDISVIRTUALBUS"
+        },
+        "Intel(R) PCI Express Root Port #5 - 7ABC": {
+            "Bus Type": "PCI",
+            "Device ID": "8086-7ABC",
+            "Subsystem ID": "72708086",
+            "PCI Path": "PciRoot(0x0)/Pci(0x1c,0x4)",
+            "ACPI Path": "\\_SB.USBX.RP05"
+        },
+        "Intel(R) Shared SRAM - 7AA7": {
+            "Bus Type": "PCI",
+            "Device ID": "8086-7AA7",
+            "Subsystem ID": "72708086",
+            "PCI Path": "PciRoot(0x0)/Pci(0x14,0x2)"
+        },
+        "Intel(R) PCI Express Root Port #1 - 7AB8": {
+            "Bus Type": "PCI",
+            "Device ID": "8086-7AB8",
+            "Subsystem ID": "72708086",
+            "PCI Path": "PciRoot(0x0)/Pci(0x1c,0x0)",
+            "ACPI Path": "\\_SB.USBX.RP01"
+        },
+        "Microsoft System Management BIOS Driver": {
+            "Bus Type": "ROOT",
+            "Device": "MSSMBIOS"
+        },
+        "\u6bcd\u677f\u8d44\u6e90_#7": {
+            "Bus Type": "ACPI",
+            "Device": "INT340E",
+            "ACPI Path": "\\_SB.PTID"
+        },
+        "\u5373\u63d2\u5373\u7528\u8f6f\u4ef6\u8bbe\u5907\u679a\u4e3e\u5668": {
+            "Bus Type": "ROOT",
+            "Device": "SYSTEM"
+        },
+        "Oray Virtual Game Controller": {
+            "Bus Type": "ROOT",
+            "Device": "SYSTEM"
+        },
+        "Intel(R) SPI (flash) Controller - 7AA4": {
+            "Bus Type": "PCI",
+            "Device ID": "8086-7AA4",
+            "Subsystem ID": "72708086",
+            "PCI Path": "PciRoot(0x0)/Pci(0x1f,0x5)"
+        },
+        "\u8fdc\u7a0b\u684c\u9762\u8bbe\u5907\u91cd\u5b9a\u5411\u7a0b\u5e8f\u603b\u7ebf": {
+            "Bus Type": "ROOT",
+            "Device": "RDPBUS"
+        }
+    }
+}

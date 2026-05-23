@@ -49,8 +49,8 @@ class BuildPage(ScrollArea):
         
         header_layout = QVBoxLayout()
         header_layout.setSpacing(SPACING["small"])
-        title = SubtitleLabel("Build OpenCore EFI")
-        subtitle = BodyLabel("Build your customized OpenCore EFI ready for installation")
+        title = SubtitleLabel("构建 OpenCore EFI")
+        subtitle = BodyLabel("构建您的自定义 OpenCore EFI，准备安装")
         subtitle.setStyleSheet("color: {};".format(COLORS["text_secondary"]))
         header_layout.addWidget(title)
         header_layout.addWidget(subtitle)
@@ -65,8 +65,8 @@ class BuildPage(ScrollArea):
         
         self.instructions_after_build_card = self.ui_utils.custom_card(
             card_type="warning",
-            title="Before Using Your EFI",
-            body="Please complete these important steps before using the built EFI:",
+            title="使用 EFI 前",
+            body="在使用构建的 EFI 之前，请完成以下重要步骤：",
             custom_widget=self.instructions_after_content,
             parent=self.scrollWidget
         )
@@ -80,18 +80,18 @@ class BuildPage(ScrollArea):
         build_control_layout.setContentsMargins(SPACING["large"], SPACING["large"], SPACING["large"], SPACING["large"])
         build_control_layout.setSpacing(SPACING["medium"])
 
-        title = StrongBodyLabel("Build Control")
+        title = StrongBodyLabel("构建控制")
         build_control_layout.addWidget(title)
 
         btn_layout = QHBoxLayout()
         btn_layout.setSpacing(SPACING["medium"])
 
-        self.build_btn = PrimaryPushButton(FluentIcon.DEVELOPER_TOOLS, "Build OpenCore EFI")
+        self.build_btn = PrimaryPushButton(FluentIcon.DEVELOPER_TOOLS, "构建 OpenCore EFI")
         self.build_btn.clicked.connect(self.start_build)
         btn_layout.addWidget(self.build_btn)
         self.controller.build_btn = self.build_btn
 
-        self.open_result_btn = PrimaryPushButton(FluentIcon.FOLDER, "Open Result Folder")
+        self.open_result_btn = PrimaryPushButton(FluentIcon.FOLDER, "打开结果文件夹")
         self.open_result_btn.clicked.connect(self.open_result)
         self.open_result_btn.setEnabled(False)
         btn_layout.addWidget(self.open_result_btn)
@@ -111,7 +111,7 @@ class BuildPage(ScrollArea):
         self.status_icon_label.setFixedSize(28, 28)
         status_row.addWidget(self.status_icon_label)
         
-        self.progress_label = StrongBodyLabel("Ready to build")
+        self.progress_label = StrongBodyLabel("准备构建")
         self.progress_label.setStyleSheet("color: {}; font-size: 15px; font-weight: 600;".format(COLORS["text_secondary"]))
         status_row.addWidget(self.progress_label)
         status_row.addStretch()
@@ -144,10 +144,10 @@ class BuildPage(ScrollArea):
         log_card_layout.setContentsMargins(SPACING["large"], SPACING["large"], SPACING["large"], SPACING["large"])
         log_card_layout.setSpacing(SPACING["medium"])
 
-        log_title = StrongBodyLabel("Build Log")
+        log_title = StrongBodyLabel("构建日志")
         log_card_layout.addWidget(log_title)
         
-        log_description = BodyLabel("Detailed build process information and status updates")
+        log_description = BodyLabel("详细的构建过程信息和状态更新")
         log_description.setStyleSheet("color: {}; font-size: 13px;".format(COLORS["text_secondary"]))
         log_card_layout.addWidget(log_description)
 
@@ -186,16 +186,16 @@ class BuildPage(ScrollArea):
         status = "success" if done else "loading"
         
         if done:
-            message = "{} complete!".format(title)
+            message = "{} 完成！".format(title)
         else:
-            step_text = steps[current_step_index] if current_step_index < len(steps) else "Processing"
-            step_counter = "Step {}/{}".format(current_step_index + 1, len(steps))
-            message = "{}: {}...".format(step_counter, step_text)
+            step_text = steps[current_step_index] if current_step_index < len(steps) else "处理中"
+            step_counter = "步骤 {}/{}".format(current_step_index + 1, len(steps))
+            message = "{}：{}...".format(step_counter, step_text)
         
         if done:
             final_progress = 100
         else:
-            if "Building" in title:
+            if "构建" in title:
                 final_progress = 40 + int(progress * 0.6)
             else:
                 final_progress = progress
@@ -204,10 +204,10 @@ class BuildPage(ScrollArea):
             self.progress_helper.update(status, message, final_progress)
         
         if done:
-            self.controller.backend.u.log_message("[BUILD] {} complete!".format(title), "SUCCESS", to_build_log=True)
+            self.controller.backend.u.log_message("[BUILD] {} 完成！".format(title), "SUCCESS", to_build_log=True)
         else:
-            step_text = steps[current_step_index] if current_step_index < len(steps) else "Processing"
-            self.controller.backend.u.log_message("[BUILD] Step {}/{}: {}...".format(current_step_index + 1, len(steps), step_text), "INFO", to_build_log=True)
+            step_text = steps[current_step_index] if current_step_index < len(steps) else "处理中"
+            self.controller.backend.u.log_message("[BUILD] 步骤 {}/{}：{}...".format(current_step_index + 1, len(steps), step_text), "INFO", to_build_log=True)
 
     def start_build(self):
         if not self.controller.validate_prerequisites():
@@ -215,23 +215,23 @@ class BuildPage(ScrollArea):
 
         if self.controller.macos_state.needs_oclp:
             content = (
-                "1. OpenCore Legacy Patcher allows restoring support for dropped GPUs and Broadcom WiFi on newer versions of macOS, and also enables AppleHDA on macOS Tahoe 26.<br>"
-                "2. OpenCore Legacy Patcher needs SIP disabled for applying custom kernel patches, which can cause instability, security risks and update issues.<br>"
-                "3. OpenCore Legacy Patcher does not officially support the Hackintosh community.<br><br>"
-                "<b><font color=\"{info_color}\">Support for macOS Tahoe 26:</font></b><br>"
-                "To patch macOS Tahoe 26, you must download OpenCore-Patcher 3.0.0 or newer from my repository: <a href=\"https://github.com/lzhoang2801/OpenCore-Legacy-Patcher/releases/tag/3.0.0\">lzhoang2801/OpenCore-Legacy-Patcher</a>.<br>"
-                "Official Dortania releases or older patches will NOT work with macOS Tahoe 26."
+                "1. OpenCore Legacy Patcher 允许在新版 macOS 上恢复对已弃用 GPU 和 Broadcom WiFi 的支持，并可在 macOS Tahoe 26 上启用 AppleHDA。<br>"
+                "2. OpenCore Legacy Patcher 需要禁用 SIP 才能应用自定义内核补丁，这可能导致不稳定、安全风险和更新问题。<br>"
+                "3. OpenCore Legacy Patcher 不正式支持 Hackintosh 社区。<br><br>"
+                "<b><font color=\"{info_color}\">macOS Tahoe 26 支持：</font></b><br>"
+                "要修补 macOS Tahoe 26，您必须从我的仓库下载 OpenCore-Patcher 3.0.0 或更新版本：<a href=\"https://github.com/lzhoang2801/OpenCore-Legacy-Patcher/releases/tag/3.0.0\">lzhoang2801/OpenCore-Legacy-Patcher</a>。<br>"
+                "官方 Dortania 版本或旧版补丁无法在 macOS Tahoe 26 上工作。"
             ).format(error_color=COLORS["error"], info_color="#00BCD4")
-            if not show_confirmation("OpenCore Legacy Patcher Warning", content):
+            if not show_confirmation("OpenCore Legacy Patcher 警告", content):
                 return
 
         self.build_in_progress = True
         self.build_successful = False
         self.build_btn.setEnabled(False)
-        self.build_btn.setText("Building...")
+        self.build_btn.setText("构建中...")
         self.open_result_btn.setEnabled(False)
         
-        self.progress_helper.update("loading", "Preparing to build...", 0)
+        self.progress_helper.update("loading", "准备构建...", 0)
         
         self.instructions_after_build_card.setVisible(False)
         self.build_log.clear()
@@ -265,33 +265,33 @@ class BuildPage(ScrollArea):
     def _check_bios_requirements(self, org_hardware_report, hardware_report):
         requirements = []
         
-        org_firmware_type = org_hardware_report.get("BIOS", {}).get("Firmware Type", "Unknown")
-        firmware_type = hardware_report.get("BIOS", {}).get("Firmware Type", "Unknown")
+        org_firmware_type = org_hardware_report.get("BIOS", {}).get("Firmware Type", "未知")
+        firmware_type = hardware_report.get("BIOS", {}).get("Firmware Type", "未知")
         if org_firmware_type == "Legacy" and firmware_type == "UEFI":
-            requirements.append("Enable UEFI mode (disable Legacy/CSM (Compatibility Support Module))")
+            requirements.append("启用 UEFI 模式（禁用 Legacy/CSM（兼容性支持模块））")
 
-        secure_boot = hardware_report.get("BIOS", {}).get("Secure Boot", "Unknown")
+        secure_boot = hardware_report.get("BIOS", {}).get("Secure Boot", "未知")
         if secure_boot != "Disabled":
-            requirements.append("Disable Secure Boot")
+            requirements.append("禁用安全启动（Secure Boot）")
         
         if hardware_report.get("Motherboard", {}).get("Platform") == "Desktop" and hardware_report.get("Motherboard", {}).get("Chipset") in chipset_data.IntelChipsets[112:]:
             resizable_bar_enabled = any(gpu_props.get("Resizable BAR", "Disabled") == "Enabled" for gpu_props in hardware_report.get("GPU", {}).values())
             if not resizable_bar_enabled:
-                requirements.append("Enable Above 4G Decoding")
-                requirements.append("Disable Resizable BAR/Smart Access Memory")
+                requirements.append("启用 Above 4G Decoding")
+                requirements.append("禁用 Resizable BAR/Smart Access Memory")
                 
         return requirements
 
     def _build_opencore_efi(self, hardware_report, disabled_devices, smbios_model, macos_version, needs_oclp):
         steps = [
-            "Copying EFI base to results folder",
-            "Applying ACPI patches",
-            "Copying kexts and snapshotting to config.plist",
-            "Generating config.plist",
-            "Cleaning up unused drivers, resources, and tools"
+            "复制 EFI 基础文件到结果文件夹",
+            "应用 ACPI 补丁",
+            "复制驱动并快照到 config.plist",
+            "生成 config.plist",
+            "清理未使用的驱动、资源和工具"
         ]
         
-        title = "Building OpenCore EFI"
+        title = "构建 OpenCore EFI"
         current_step = 0
 
         progress = int((current_step / len(steps)) * 100)
@@ -435,7 +435,7 @@ class BuildPage(ScrollArea):
                 item.widget().deleteLater()
         
         if bios_requirements:
-            bios_header = StrongBodyLabel("1. BIOS/UEFI Settings Required:")
+            bios_header = StrongBodyLabel("1. BIOS/UEFI 设置要求：")
             bios_header.setStyleSheet("color: {}; font-size: 14px;".format(COLORS["warning_text"]))
             self.instructions_after_content_layout.addWidget(bios_header)
             
@@ -447,20 +447,20 @@ class BuildPage(ScrollArea):
             
             self.instructions_after_content_layout.addSpacing(SPACING["medium"])
         
-        usb_header = StrongBodyLabel("{}. USB Port Mapping:".format(2 if bios_requirements else 1))
+        usb_header = StrongBodyLabel("{}. USB 端口映射：".format(2 if bios_requirements else 1))
         usb_header.setStyleSheet("color: {}; font-size: 14px;".format(COLORS["warning_text"]))
         self.instructions_after_content_layout.addWidget(usb_header)
         
         path_sep = "\\" if platform.system() == "Windows" else "/"
         
         usb_mapping_instructions = (
-            "1. Use USBToolBox tool to map USB ports<br>"
-            "2. Add created UTBMap.kext into the EFI{path_sep}OC{path_sep}Kexts folder<br>"
-            "3. Remove UTBDefault.kext from the EFI{path_sep}OC{path_sep}Kexts folder<br>"
-            "4. Edit config.plist using ProperTree:<br>"
-            "   a. Run OC Snapshot (Command/Ctrl + R)<br>"
-            "   b. Enable XhciPortLimit quirk if you have more than 15 ports per controller<br>"
-            "   c. Save the file when finished."
+            "1. 使用 USBToolBox 工具映射 USB 端口<br>"
+            "2. 将创建的 UTBMap.kext 添加到 EFI{path_sep}OC{path_sep}Kexts 文件夹<br>"
+            "3. 从 EFI{path_sep}OC{path_sep}Kexts 文件夹中删除 UTBDefault.kext<br>"
+            "4. 使用 ProperTree 编辑 config.plist：<br>"
+            "   a. 运行 OC Snapshot（Command/Ctrl + R）<br>"
+            "   b. 如果每个控制器有超过 15 个端口，启用 XhciPortLimit quirk<br>"
+            "   c. 完成后保存文件。"
         ).format(path_sep=path_sep)
         
         usb_label = BodyLabel(usb_mapping_instructions)
@@ -476,37 +476,37 @@ class BuildPage(ScrollArea):
         
         if success:
             self.log_card.setVisible(False)
-            self.progress_helper.update("success", "Build completed successfully!", 100)
+            self.progress_helper.update("success", "构建成功完成！", 100)
             
             self.show_post_build_instructions(bios_requirements)
             self._load_configs_after_build()
             
-            self.build_btn.setText("Build OpenCore EFI")
+            self.build_btn.setText("构建 OpenCore EFI")
             self.build_btn.setEnabled(True)
             self.open_result_btn.setEnabled(True)
             
-            success_message = "Your OpenCore EFI has been built successfully!"
+            success_message = "您的 OpenCore EFI 已成功构建！"
             if bios_requirements is not None:
-                success_message += " Review the important instructions below."
+                success_message += " 请查看下方的重要说明。"
             
             self.controller.update_status(success_message, "success")
         else:
-            self.progress_helper.update("error", "Build OpenCore EFI failed", None)
+            self.progress_helper.update("error", "构建 OpenCore EFI 失败", None)
             
             self.config_editor.setVisible(False)
             
-            self.build_btn.setText("Retry Build OpenCore EFI")
+            self.build_btn.setText("重试构建 OpenCore EFI")
             self.build_btn.setEnabled(True)
             self.open_result_btn.setEnabled(False)
             
-            self.controller.update_status("An error occurred during the build. Check the log for details.", "error")
+            self.controller.update_status("构建过程中发生错误。请查看日志了解详情。", "error")
 
     def open_result(self):
         result_dir = self.controller.backend.result_dir
         try:
             self.controller.backend.u.open_folder(result_dir)
         except Exception as e:
-            self.controller.update_status("Failed to open result folder: {}".format(e), "warning")
+            self.controller.update_status("无法打开结果文件夹：{}".format(e), "warning")
 
     def _load_configs_after_build(self):
         backend = self.controller.backend

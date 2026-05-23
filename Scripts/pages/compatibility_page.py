@@ -87,10 +87,10 @@ class CompatibilityPage(ScrollArea):
         title_layout.setContentsMargins(0, 0, 0, 0)
         title_layout.setSpacing(SPACING["tiny"])
 
-        title_label = SubtitleLabel("Hardware Compatibility")
+        title_label = SubtitleLabel("硬件兼容性")
         title_layout.addWidget(title_label)
 
-        subtitle_label = BodyLabel("Review hardware compatibility with macOS")
+        subtitle_label = BodyLabel("查看硬件与 macOS 的兼容性")
         subtitle_label.setStyleSheet("color: {};".format(COLORS["text_secondary"]))
         title_layout.addWidget(subtitle_label)
 
@@ -108,7 +108,7 @@ class CompatibilityPage(ScrollArea):
         self.contentLayout.setSpacing(SPACING["large"])
         self.expandLayout.addWidget(self.contentWidget)
 
-        self.placeholder_label = BodyLabel("Load a hardware report to see compatibility information")
+        self.placeholder_label = BodyLabel("加载硬件报告以查看兼容性信息")
         self.placeholder_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.placeholder_label.setStyleSheet("color: #605E5C; padding: 40px;")
         self.placeholder_label.setWordWrap(True)
@@ -133,24 +133,24 @@ class CompatibilityPage(ScrollArea):
 
         code_map = {
             "ERROR_MISSING_SSE4": (
-                "Missing required SSE4.x instruction set.",
-                "Your CPU is not supported by macOS versions newer than Sierra (10.12)."
+                "缺少必需的 SSE4.x 指令集。",
+                "您的 CPU 不支持高于 Sierra (10.12) 的 macOS 版本。"
             ),
             "ERROR_NO_COMPATIBLE_GPU": (
-                "You cannot install macOS without a supported GPU.",
-                "Please do NOT spam my inbox or issue tracker about this issue anymore!"
+                "没有支持的 GPU 无法安装 macOS。",
+                "请不要再就此问题向我发送邮件或提交 issue！"
             ),
             "ERROR_INTEL_VMD": (
-                "Intel VMD controllers are not supported in macOS.",
-                "Please disable Intel VMD in the BIOS settings and try again with new hardware report."
+                "macOS 不支持 Intel VMD 控制器。",
+                "请在 BIOS 设置中禁用 Intel VMD，然后使用新的硬件报告重试。"
             ),
             "ERROR_NO_COMPATIBLE_STORAGE": (
-                "No compatible storage controller for macOS was found!",
-                "Consider purchasing a compatible SSD NVMe for your system."
+                "未找到与 macOS 兼容的存储控制器！",
+                "请考虑为您的系统购买兼容的 NVMe SSD。"
             )
         }
 
-        title = "Hardware Compatibility Issue"
+        title = "硬件兼容性问题"
         messages = []
         notes = []
         for code in codes:
@@ -169,26 +169,26 @@ class CompatibilityPage(ScrollArea):
         if self.controller.macos_state.native_version:
             min_ver_name = os_data.get_macos_name_by_darwin(self.controller.macos_state.native_version[0])
             max_ver_name = os_data.get_macos_name_by_darwin(self.controller.macos_state.native_version[-1])
-            native_range = min_ver_name if min_ver_name == max_ver_name else "{} to {}".format(min_ver_name, max_ver_name)
+            native_range = min_ver_name if min_ver_name == max_ver_name else "{} 至 {}".format(min_ver_name, max_ver_name)
             
-            message = "Native macOS support: {}".format(native_range)
+            message = "原生 macOS 支持：{}".format(native_range)
             
             if self.controller.macos_state.ocl_patched_version:
                  oclp_max_name = os_data.get_macos_name_by_darwin(self.controller.macos_state.ocl_patched_version[0])
                  oclp_min_name = os_data.get_macos_name_by_darwin(self.controller.macos_state.ocl_patched_version[-1])
-                 oclp_range = oclp_min_name if oclp_min_name == oclp_max_name else "{} to {}".format(oclp_min_name, oclp_max_name)
-                 message += "\nOpenCore Legacy Patcher extended support: {}".format(oclp_range)
+                 oclp_range = oclp_min_name if oclp_min_name == oclp_max_name else "{} 至 {}".format(oclp_min_name, oclp_max_name)
+                 message += "\nOpenCore Legacy Patcher 扩展支持：{}".format(oclp_range)
 
-            self.status_banner.show_success("Hardware is Compatible", message)
+            self.status_banner.show_success("硬件兼容", message)
         else:
             self.status_banner.show_error(
-                "Incompatible Hardware",
-                "No supported macOS version found for this hardware configuration."
+                "不兼容的硬件",
+                "未找到适用于此硬件配置的支持 macOS 版本。"
             )
 
     def format_compatibility(self, compat_tuple):
         if not compat_tuple or compat_tuple == (None, None):
-            return "Unsupported", "#D13438"
+            return "不支持", "#D13438"
 
         max_ver, min_ver = compat_tuple
 
@@ -197,11 +197,11 @@ class CompatibilityPage(ScrollArea):
             min_name = os_data.get_macos_name_by_darwin(min_ver)
 
             if max_name == min_name:
-                return "Up to {}".format(max_name), "#0078D4"
+                return "最高至 {}".format(max_name), "#0078D4"
             else:
-                return "{} to {}".format(min_name, max_name), "#107C10"
+                return "{} 至 {}".format(min_name, max_name), "#107C10"
 
-        return "Unknown", "#605E5C"
+        return "未知", "#605E5C"
 
     def update_display(self):
         if not self.contentLayout:
@@ -239,7 +239,7 @@ class CompatibilityPage(ScrollArea):
         self.update()
 
     def _show_placeholder(self):
-        self.placeholder_label = BodyLabel("Load hardware report to see compatibility information")
+        self.placeholder_label = BodyLabel("加载硬件报告以查看兼容性信息")
         self.placeholder_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.placeholder_label.setStyleSheet("color: #605E5C; padding: 40px;")
         self.placeholder_label.setWordWrap(True)
@@ -250,8 +250,8 @@ class CompatibilityPage(ScrollArea):
         no_data_card = self.ui_utils.custom_card(
             card_type="error",
             icon=FluentIcon.CLOSE,
-            title="No compatible hardware information found in the report.",
-            body="Please ensure the hardware report contains valid device data.",
+            title="报告中未找到兼容的硬件信息。",
+            body="请确保硬件报告包含有效的设备数据。",
             parent=self.scrollWidget
         )
         self.contentLayout.addWidget(no_data_card)
@@ -275,28 +275,28 @@ class CompatibilityPage(ScrollArea):
         cpu_card = GroupHeaderCardWidget(self.scrollWidget)
         cpu_card.setTitle("CPU")
         
-        name = cpu_info.get("Processor Name", "Unknown")
+        name = cpu_info.get("Processor Name", "未知")
         self.ui_utils.add_group_with_indent(
             cpu_card,
             self.ui_utils.colored_icon(FluentIcon.TAG, COLORS["primary"]),
-            "Processor",
+            "处理器",
             name,
             indent_level=0
         )
 
-        self._add_compatibility_group(cpu_card, "macOS Compatibility", cpu_info.get("Compatibility", (None, None)))
+        self._add_compatibility_group(cpu_card, "macOS 兼容性", cpu_info.get("Compatibility", (None, None)))
 
         details = []
         if cpu_info.get("Codename"):
-            details.append("Codename: {}".format(cpu_info.get("Codename")))
+            details.append("代号：{}".format(cpu_info.get("Codename")))
         if cpu_info.get("Core Count"):
-            details.append("Cores: {}".format(cpu_info.get("Core Count")))
+            details.append("核心数：{}".format(cpu_info.get("Core Count")))
 
         if details:
             self.ui_utils.add_group_with_indent(
                 cpu_card,
                 self.ui_utils.colored_icon(FluentIcon.INFO, COLORS["info"]),
-                "Details",
+                "详情",
                 " • ".join(details),
                 indent_level=1
             )
@@ -308,19 +308,19 @@ class CompatibilityPage(ScrollArea):
         if "GPU" not in report or not report["GPU"]: return 0
         
         gpu_card = GroupHeaderCardWidget(self.scrollWidget)
-        gpu_card.setTitle("Graphics")
+        gpu_card.setTitle("显卡")
 
         for idx, (gpu_name, gpu_info) in enumerate(report["GPU"].items()):
-            device_type = gpu_info.get("Device Type", "Unknown")
+            device_type = gpu_info.get("Device Type", "未知")
             self.ui_utils.add_group_with_indent(
                 gpu_card,
                 self.ui_utils.colored_icon(FluentIcon.PHOTO, COLORS["primary"]),
                 gpu_name,
-                "Type: {}".format(device_type),
+                "类型：{}".format(device_type),
                 indent_level=0
             )
 
-            self._add_compatibility_group(gpu_card, "macOS Compatibility", gpu_info.get("Compatibility", (None, None)))
+            self._add_compatibility_group(gpu_card, "macOS 兼容性", gpu_info.get("Compatibility", (None, None)))
 
             if "OCLP Compatibility" in gpu_info:
                 oclp_compat = gpu_info.get("OCLP Compatibility")
@@ -328,9 +328,9 @@ class CompatibilityPage(ScrollArea):
                 self.ui_utils.add_group_with_indent(
                     gpu_card,
                     self.ui_utils.colored_icon(FluentIcon.IOT, COLORS["primary"]),
-                    "OCLP Compatibility",
+                    "OCLP 兼容性",
                     oclp_text,
-                    self.ui_utils.create_info_widget("Extended support with OpenCore Legacy Patcher", COLORS["text_secondary"]),
+                    self.ui_utils.create_info_widget("通过 OpenCore Legacy Patcher 扩展支持", COLORS["text_secondary"]),
                     indent_level=1
                 )
 
@@ -344,7 +344,7 @@ class CompatibilityPage(ScrollArea):
         connected_monitors = []
         for monitor_name, monitor_info in monitors.items():
             if monitor_info.get("Connected GPU") == gpu_name:
-                connector = monitor_info.get("Connector Type", "Unknown")
+                connector = monitor_info.get("Connector Type", "未知")
                 monitor_str = "{} ({})".format(monitor_name, connector)
                 
                 manufacturer = gpu_info.get("Manufacturer", "")
@@ -353,7 +353,7 @@ class CompatibilityPage(ScrollArea):
 
                 if "Intel" in manufacturer and device_id.startswith(("01", "04", "0A", "0C", "0D")):
                     if connector == "VGA":
-                        monitor_str += " (Unsupported)"
+                        monitor_str += " (不支持)"
                 
                 connected_monitors.append(monitor_str)
 
@@ -361,7 +361,7 @@ class CompatibilityPage(ScrollArea):
             self.ui_utils.add_group_with_indent(
                 gpu_card,
                 self.ui_utils.colored_icon(FluentIcon.VIEW, COLORS["info"]),
-                "Connected Displays",
+                "已连接显示器",
                 ", ".join(connected_monitors),
                 indent_level=1
             )
@@ -370,7 +370,7 @@ class CompatibilityPage(ScrollArea):
         if "Sound" not in report or not report["Sound"]: return 0
         
         sound_card = GroupHeaderCardWidget(self.scrollWidget)
-        sound_card.setTitle("Audio")
+        sound_card.setTitle("音频")
 
         for audio_device, audio_props in report["Sound"].items():
             self.ui_utils.add_group_with_indent(
@@ -381,14 +381,14 @@ class CompatibilityPage(ScrollArea):
                 indent_level=0
             )
 
-            self._add_compatibility_group(sound_card, "macOS Compatibility", audio_props.get("Compatibility", (None, None)))
+            self._add_compatibility_group(sound_card, "macOS 兼容性", audio_props.get("Compatibility", (None, None)))
 
             endpoints = audio_props.get("Audio Endpoints", [])
             if endpoints:
                 self.ui_utils.add_group_with_indent(
                     sound_card,
                     self.ui_utils.colored_icon(FluentIcon.HEADPHONE, COLORS["info"]),
-                    "Audio Endpoints",
+                    "音频端点",
                     ", ".join(endpoints),
                     indent_level=1
                 )
@@ -400,7 +400,7 @@ class CompatibilityPage(ScrollArea):
         if "Network" not in report or not report["Network"]: return 0
         
         network_card = GroupHeaderCardWidget(self.scrollWidget)
-        network_card.setTitle("Network")
+        network_card.setTitle("网络")
 
         for device_name, device_props in report["Network"].items():
             self.ui_utils.add_group_with_indent(
@@ -411,7 +411,7 @@ class CompatibilityPage(ScrollArea):
                 indent_level=0
             )
 
-            self._add_compatibility_group(network_card, "macOS Compatibility", device_props.get("Compatibility", (None, None)))
+            self._add_compatibility_group(network_card, "macOS 兼容性", device_props.get("Compatibility", (None, None)))
 
             if "OCLP Compatibility" in device_props:
                 oclp_compat = device_props.get("OCLP Compatibility")
@@ -419,9 +419,9 @@ class CompatibilityPage(ScrollArea):
                 self.ui_utils.add_group_with_indent(
                     network_card,
                     self.ui_utils.colored_icon(FluentIcon.IOT, COLORS["primary"]),
-                    "OCLP Compatibility",
+                    "OCLP 兼容性",
                     oclp_text,
-                    self.ui_utils.create_info_widget("Extended support with OpenCore Legacy Patcher", COLORS["text_secondary"]),
+                    self.ui_utils.create_info_widget("通过 OpenCore Legacy Patcher 扩展支持", COLORS["text_secondary"]),
                     indent_level=1
                 )
 
@@ -438,20 +438,20 @@ class CompatibilityPage(ScrollArea):
         continuity_color = COLORS["text_secondary"]
 
         if device_id in pci_data.BroadcomWiFiIDs:
-            continuity_info = "Full support (AirDrop, Handoff, Universal Clipboard, Instant Hotspot, etc.)"
+            continuity_info = "完全支持（AirDrop、Handoff、通用剪贴板、即时热点等）"
             continuity_color = COLORS["success"]
         elif device_id in pci_data.IntelWiFiIDs:
-            continuity_info = "Partial (Handoff and Universal Clipboard with AirportItlwm) - AirDrop, Universal Clipboard, Instant Hotspot,... not available"
+            continuity_info = "部分支持（使用 AirportItlwm 支持 Handoff 和通用剪贴板）- 不支持 AirDrop、通用剪贴板、即时热点等"
             continuity_color = COLORS["warning"]
         elif device_id in pci_data.AtherosWiFiIDs:
-            continuity_info = "Limited support (No Continuity features available). Atheros cards are not recommended for macOS."
+            continuity_info = "有限支持（无连续互通功能）。不推荐在 macOS 上使用 Atheros 网卡。"
             continuity_color = COLORS["error"]
 
         if continuity_info:
             self.ui_utils.add_group_with_indent(
                 network_card,
                 self.ui_utils.colored_icon(FluentIcon.SYNC, continuity_color),
-                "Continuity Features",
+                "连续互通功能",
                 continuity_info,
                 self.ui_utils.create_info_widget("", continuity_color),
                 indent_level=1
@@ -461,7 +461,7 @@ class CompatibilityPage(ScrollArea):
         if "Storage Controllers" not in report or not report["Storage Controllers"]: return 0
         
         storage_card = GroupHeaderCardWidget(self.scrollWidget)
-        storage_card.setTitle("Storage")
+        storage_card.setTitle("存储")
 
         for controller_name, controller_props in report["Storage Controllers"].items():
             self.ui_utils.add_group_with_indent(
@@ -472,14 +472,14 @@ class CompatibilityPage(ScrollArea):
                 indent_level=0
             )
 
-            self._add_compatibility_group(storage_card, "macOS Compatibility", controller_props.get("Compatibility", (None, None)))
+            self._add_compatibility_group(storage_card, "macOS 兼容性", controller_props.get("Compatibility", (None, None)))
 
             disk_drives = controller_props.get("Disk Drives", [])
             if disk_drives:
                 self.ui_utils.add_group_with_indent(
                     storage_card,
                     self.ui_utils.colored_icon(FluentIcon.FOLDER, COLORS["info"]),
-                    "Disk Drives",
+                    "磁盘驱动器",
                     ", ".join(disk_drives),
                     indent_level=1
                 )
@@ -491,7 +491,7 @@ class CompatibilityPage(ScrollArea):
         if "Bluetooth" not in report or not report["Bluetooth"]: return 0
         
         bluetooth_card = GroupHeaderCardWidget(self.scrollWidget)
-        bluetooth_card.setTitle("Bluetooth")
+        bluetooth_card.setTitle("蓝牙")
 
         for bluetooth_name, bluetooth_props in report["Bluetooth"].items():
             self.ui_utils.add_group_with_indent(
@@ -502,7 +502,7 @@ class CompatibilityPage(ScrollArea):
                 indent_level=0
             )
 
-            self._add_compatibility_group(bluetooth_card, "macOS Compatibility", bluetooth_props.get("Compatibility", (None, None)))
+            self._add_compatibility_group(bluetooth_card, "macOS 兼容性", bluetooth_props.get("Compatibility", (None, None)))
 
         self.contentLayout.addWidget(bluetooth_card)
         return 1
@@ -510,13 +510,13 @@ class CompatibilityPage(ScrollArea):
     def _add_biometric_card(self, report):
         if "Biometric" not in report or not report["Biometric"]: return 0
         bio_card = GroupHeaderCardWidget(self.scrollWidget)
-        bio_card.setTitle("Biometric")
+        bio_card.setTitle("生物识别")
 
         self.ui_utils.add_group_with_indent(
             bio_card,
             self.ui_utils.colored_icon(FluentIcon.CLOSE, COLORS["warning"]),
-            "Hardware Limitation",
-            "Biometric authentication in macOS requires Apple T2 Chip, which is not available for Hackintosh systems.",
+            "硬件限制",
+            "macOS 中的生物识别认证需要 Apple T2 芯片，而 Hackintosh 系统没有此芯片。",
             self.ui_utils.create_info_widget("", COLORS["warning"]),
             indent_level=0
         )
@@ -526,7 +526,7 @@ class CompatibilityPage(ScrollArea):
                 bio_card,
                 self.ui_utils.colored_icon(FluentIcon.FINGERPRINT, COLORS["error"]),
                 bio_device,
-                "Unsupported",
+                "不支持",
                 indent_level=0
             )
 
@@ -537,7 +537,7 @@ class CompatibilityPage(ScrollArea):
         if "SD Controller" not in report or not report["SD Controller"]: return 0
         
         sd_card = GroupHeaderCardWidget(self.scrollWidget)
-        sd_card.setTitle("SD Controller")
+        sd_card.setTitle("SD 控制器")
 
         for controller_name, controller_props in report["SD Controller"].items():
             self.ui_utils.add_group_with_indent(
@@ -548,7 +548,7 @@ class CompatibilityPage(ScrollArea):
                 indent_level=0
             )
 
-            self._add_compatibility_group(sd_card, "macOS Compatibility", controller_props.get("Compatibility", (None, None)))
+            self._add_compatibility_group(sd_card, "macOS 兼容性", controller_props.get("Compatibility", (None, None)))
 
         self.contentLayout.addWidget(sd_card)
         return 1

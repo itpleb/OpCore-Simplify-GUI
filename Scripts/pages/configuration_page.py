@@ -17,8 +17,8 @@ class macOSCard(SettingCard):
     def __init__(self, controller, on_select_version, parent=None):
         super().__init__(
             FluentIcon.GLOBE,
-            "macOS Version",
-            "Target operating system version",
+            "macOS 版本",
+            "目标操作系统版本",
             parent
         )
         self.controller = controller
@@ -26,7 +26,7 @@ class macOSCard(SettingCard):
         self.versionLabel = BodyLabel(self.controller.macos_state.selected_version_name)
         self.versionLabel.setStyleSheet("color: {}; margin-right: 10px;".format(COLORS["text_secondary"]))
         
-        self.selectVersionBtn = PushButton("Select Version")
+        self.selectVersionBtn = PushButton("选择版本")
         self.selectVersionBtn.clicked.connect(on_select_version)
         self.selectVersionBtn.setFixedWidth(150)
         
@@ -41,17 +41,17 @@ class AudioLayoutCard(SettingCard):
     def __init__(self, controller, on_select_layout, parent=None):
         super().__init__(
             FluentIcon.MUSIC,
-            "Audio Layout ID",
-            "Select layout ID for your audio codec",
+            "音频布局 ID",
+            "为您的音频编解码器选择布局 ID",
             parent
         )
         self.controller = controller
         
-        layout_text = str(self.controller.hardware_state.audio_layout_id) if self.controller.hardware_state.audio_layout_id is not None else "Not configured"
+        layout_text = str(self.controller.hardware_state.audio_layout_id) if self.controller.hardware_state.audio_layout_id is not None else "未配置"
         self.layoutLabel = BodyLabel(layout_text)
         self.layoutLabel.setStyleSheet("color: {}; margin-right: 10px;".format(COLORS["text_secondary"]))
         
-        self.selectLayoutBtn = PushButton("Configure Layout")
+        self.selectLayoutBtn = PushButton("配置布局")
         self.selectLayoutBtn.clicked.connect(on_select_layout)
         self.selectLayoutBtn.setFixedWidth(150)
         
@@ -62,24 +62,24 @@ class AudioLayoutCard(SettingCard):
         self.setVisible(False)
 
     def update_layout(self):
-        layout_text = str(self.controller.hardware_state.audio_layout_id) if self.controller.hardware_state.audio_layout_id is not None else "Not configured"
+        layout_text = str(self.controller.hardware_state.audio_layout_id) if self.controller.hardware_state.audio_layout_id is not None else "未配置"
         self.layoutLabel.setText(layout_text)
 
 class SMBIOSModelCard(SettingCard):
     def __init__(self, controller, on_select_model, parent=None):
         super().__init__(
             FluentIcon.TAG,
-            "SMBIOS Model",
-            "Select Mac model identifier for your system",
+            "SMBIOS 型号",
+            "为您的系统选择 Mac 型号标识符",
             parent
         )
         self.controller = controller
         
-        model_text = self.controller.smbios_state.model_name if self.controller.smbios_state.model_name != "Not selected" else "Not configured"
+        model_text = self.controller.smbios_state.model_name if self.controller.smbios_state.model_name != "Not selected" else "未配置"
         self.modelLabel = BodyLabel(model_text)
         self.modelLabel.setStyleSheet("color: {}; margin-right: 10px;".format(COLORS["text_secondary"]))
         
-        self.selectModelBtn = PushButton("Configure Model")
+        self.selectModelBtn = PushButton("配置型号")
         self.selectModelBtn.clicked.connect(on_select_model)
         self.selectModelBtn.setFixedWidth(150)
         
@@ -88,7 +88,7 @@ class SMBIOSModelCard(SettingCard):
         self.hBoxLayout.addSpacing(16)
 
     def update_model(self):
-        model_text = self.controller.smbios_state.model_name if self.controller.smbios_state.model_name != "Not selected" else "Not configured"
+        model_text = self.controller.smbios_state.model_name if self.controller.smbios_state.model_name != "Not selected" else "未配置"
         self.modelLabel.setText(model_text)
 
 class ConfigurationPage(ScrollArea):
@@ -121,10 +121,10 @@ class ConfigurationPage(ScrollArea):
         header_layout.setContentsMargins(0, 0, 0, 0)
         header_layout.setSpacing(SPACING["tiny"])
 
-        title_label = SubtitleLabel("Configuration")
+        title_label = SubtitleLabel("配置")
         header_layout.addWidget(title_label)
 
-        subtitle_label = BodyLabel("Configure your OpenCore EFI settings")
+        subtitle_label = BodyLabel("配置您的 OpenCore EFI 设置")
         subtitle_label.setStyleSheet("color: {};".format(COLORS["text_secondary"]))
         header_layout.addWidget(subtitle_label)
 
@@ -138,20 +138,20 @@ class ConfigurationPage(ScrollArea):
         self.expandLayout.addWidget(self.macos_card)
 
         self.acpi_card = PushSettingCard(
-            "Configure Patches",
+            "配置补丁",
             FluentIcon.DEVELOPER_TOOLS,
-            "ACPI Patches",
-            "Customize system ACPI table modifications for hardware compatibility",
+            "ACPI 补丁",
+            "自定义系统 ACPI 表修改以实现硬件兼容性",
             self.scrollWidget
         )
         self.acpi_card.clicked.connect(self.customize_acpi_patches)
         self.expandLayout.addWidget(self.acpi_card)
 
         self.kexts_card = PushSettingCard(
-            "Manage Kexts",
+            "管理驱动",
             FluentIcon.CODE,
-            "Kernel Extensions",
-            "Configure kexts required for your hardware",
+            "内核扩展",
+            "配置您的硬件所需的 kext 驱动",
             self.scrollWidget
         )
         self.kexts_card.clicked.connect(self.customize_kexts)
@@ -181,22 +181,22 @@ class ConfigurationPage(ScrollArea):
         icon = FluentIcon.INFO
         
         if disabled_devices:
-            status_text = "Hardware components excluded from configuration"
+            status_text = "部分硬件组件已从配置中排除"
             status_color = COLORS["text_secondary"]
             bg_color = COLORS["warning_bg"]
         elif not self.controller.hardware_state.hardware_report:
-            status_text = "Please select hardware report first"
+            status_text = "请先选择硬件报告"
         elif not self.controller.macos_state.darwin_version:
-            status_text = "Please select target macOS version first"
+            status_text = "请先选择目标 macOS 版本"
         else:
-            status_text = "All hardware components are compatible and enabled"
+            status_text = "所有硬件组件兼容且已启用"
             status_color = COLORS["success"]
             bg_color = COLORS["success_bg"]
             icon = FluentIcon.ACCEPT
 
         self.status_card = ExpandGroupSettingCard(
             icon,
-            "Compatibility Status",
+            "兼容性状态",
             status_text,
             self.scrollWidget
         )
@@ -207,7 +207,7 @@ class ConfigurationPage(ScrollArea):
                     self.status_card,
                     FluentIcon.CLOSE,
                     device_name,
-                    "Incompatible" if device_info.get("Compatibility") == (None, None) else "Disabled",
+                    "不兼容" if device_info.get("Compatibility") == (None, None) else "已禁用",
                 )
         else:
             pass
@@ -226,7 +226,7 @@ class ConfigurationPage(ScrollArea):
 
         if selected_version:
             self.controller.apply_macos_version(selected_version)
-            self.controller.update_status("macOS version updated to {}".format(self.controller.macos_state.selected_version_name), "success")
+            self.controller.update_status("macOS 版本已更新为 {}".format(self.controller.macos_state.selected_version_name), "success")
             if hasattr(self, "macos_card"):
                 self.macos_card.update_version()
 
@@ -235,14 +235,14 @@ class ConfigurationPage(ScrollArea):
             return
 
         self.controller.backend.ac.customize_patch_selection()
-        self.controller.update_status("ACPI patches configuration updated successfully", "success")
+        self.controller.update_status("ACPI 补丁配置已成功更新", "success")
 
     def customize_kexts(self):
         if not self.controller.validate_prerequisites():
             return
 
         self.controller.backend.k.kext_configuration_menu(self.controller.macos_state.darwin_version)
-        self.controller.update_status("Kext configuration updated successfully", "success")
+        self.controller.update_status("驱动配置已成功更新", "success")
 
     def customize_audio_layout(self):
         if not self.controller.validate_prerequisites():
@@ -257,7 +257,7 @@ class ConfigurationPage(ScrollArea):
             self.controller.hardware_state.audio_layout_id = audio_layout_id
             self.controller.hardware_state.audio_controller_properties = audio_controller_properties
             self._update_audio_layout_card_visibility()
-            self.controller.update_status("Audio layout updated to {}".format(audio_layout_id), "success")
+            self.controller.update_status("音频布局已更新为 {}".format(audio_layout_id), "success")
 
     def customize_smbios_model(self):
         if not self.controller.validate_prerequisites():
@@ -272,7 +272,7 @@ class ConfigurationPage(ScrollArea):
 
             if hasattr(self, "smbios_card"):
                 self.smbios_card.update_model()
-            self.controller.update_status("SMBIOS model updated to {}".format(selected_model), "success")
+            self.controller.update_status("SMBIOS 型号已更新为 {}".format(selected_model), "success")
 
     def _update_audio_layout_card_visibility(self):
         if self.controller.hardware_state.audio_layout_id is not None:
